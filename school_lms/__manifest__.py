@@ -13,8 +13,8 @@ Student LMS for Odoo 19
 - Change password: current password, new password, save
 - Each student sees only their own data (by partner_id / roll_number)
     """,
-    'author': 'Abdul Wahid ',
-    'website': '',
+    'author': 'EBITDA SOLUTIONS LLP',
+    'website': 'https://ebitdasolutions.com',
     'depends': ['education_school_management', 'website'],
     'data': [
         'security/ir.model.access.csv',

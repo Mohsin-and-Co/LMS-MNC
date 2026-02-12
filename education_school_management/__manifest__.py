@@ -20,10 +20,10 @@ Features:
 * Access Control for Sale Order Lines  
 * Third-Party Integration  
 """,
-    'author': 'ebitdasol',
-    'website': 'https://pk.linkedin.com/company/ebitda-solutions',
+    'author': 'EBITDA SOLUTIONS LLP',
+    'website': 'https://ebitdasolutions.com',
     'license': 'LGPL-3',
-    'maintainers': ['EBITDASOL'],
+    'maintainers': ['EBITDA SOLUTIONS LLP'],
     'price': 38.59,
     'currency': 'USD',
     'depends': [
