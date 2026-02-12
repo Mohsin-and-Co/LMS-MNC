@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Attendance WhatsApp Wizard Form View -->
+        <record id="view_attendance_whatsapp_wizard_form" model="ir.ui.view">
+            <field name="name">school.attendance.whatsapp.wizard.form</field>
+            <field name="model">school.attendance.whatsapp.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Send Attendance via WhatsApp">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="class_id" required="1" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="send_to_class_teacher"/>
+                                <field name="send_to_parents"/>
+                            </group>
+                        </group>
+                        <div class="alert alert-info" role="alert">
+                            <p><strong>Note:</strong> This wizard will send class-wise attendance summary via WhatsApp.</p>
+                            <ul>
+                                <li>Class Teacher: Receives summary with all present/absent students</li>
+                                <li>Parents: Receive individual attendance status for their child</li>
+                            </ul>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button name="action_send_classwise_attendance" string="Send Classwise Attendance" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Staff Attendance WhatsApp Wizard Form View -->
+        <record id="view_staff_attendance_whatsapp_wizard_form" model="ir.ui.view">
+            <field name="name">school.staff.attendance.whatsapp.wizard.form</field>
+            <field name="model">school.attendance.whatsapp.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Send Staff Attendance via WhatsApp">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <div class="alert alert-info" role="alert">
+                            <p><strong>Note:</strong> This wizard will send staff attendance summary via WhatsApp to all staff members for the selected date.</p>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button name="action_send_staff_attendance" string="Send Staff Attendance" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Attendance WhatsApp Wizard Action -->
+        <record id="action_attendance_whatsapp_wizard" model="ir.actions.act_window">
+            <field name="name">Send Classwise Attendance via WhatsApp</field>
+            <field name="res_model">school.attendance.whatsapp.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Staff Attendance WhatsApp Wizard Action -->
+        <record id="action_staff_attendance_whatsapp_wizard" model="ir.actions.act_window">
+            <field name="name">Send Staff Attendance via WhatsApp</field>
+            <field name="res_model">school.attendance.whatsapp.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_staff_attendance_whatsapp_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_attendance_whatsapp_classwise"
+                  name="Send Classwise Attendance via WhatsApp"
+                  parent="menu_attendance_root"
+                  action="action_attendance_whatsapp_wizard"
+                  sequence="20"/>
+
+        <menuitem id="menu_attendance_whatsapp_staff"
+                  name="Send Staff Attendance via WhatsApp"
+                  parent="menu_attendance_root"
+                  action="action_staff_attendance_whatsapp_wizard"
+                  sequence="30"/>
+
+    </data>
+</odoo>

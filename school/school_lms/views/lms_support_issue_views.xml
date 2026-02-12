@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_lms_support_issue_search" model="ir.ui.view">
+        <field name="name">lms.support.issue.search</field>
+        <field name="model">lms.support.issue</field>
+        <field name="arch" type="xml">
+            <search string="Support Issues">
+                <field name="student_id"/>
+                <field name="complaint_type"/>
+                <field name="state"/>
+                <filter string="Open" name="open" domain="[('state', '=', 'open')]"/>
+                <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_lms_support_issue_tree" model="ir.ui.view">
+        <field name="name">lms.support.issue.tree</field>
+        <field name="model">lms.support.issue</field>
+        <field name="arch" type="xml">
+            <list string="Support Issues" create="0" default_order="create_date desc">
+                <field name="create_date"/>
+                <field name="student_name"/>
+                <field name="class_display"/>
+                <field name="roll_number"/>
+                <field name="complaint_type"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-warning="state == 'in_progress'" decoration-info="state == 'open'"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_lms_support_issue_form" model="ir.ui.view">
+        <field name="name">lms.support.issue.form</field>
+        <field name="model">lms.support.issue</field>
+        <field name="arch" type="xml">
+            <form string="Support Issue">
+                <header>
+                    <button name="action_mark_in_progress" string="Mark In Progress" type="object"
+                            class="btn-warning" invisible="state != 'open'"/>
+                    <button name="action_mark_done" string="Mark Done" type="object"
+                            class="btn-success" invisible="state == 'done'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="student_name"/>
+                            <field name="class_display"/>
+                            <field name="roll_number"/>
+                            <field name="complaint_type"/>
+                            <field name="state" widget="statusbar" statusbar_visible="open,in_progress,done"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Issue description submitted by student."/>
+                    <field name="create_date" readonly="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_lms_support_issue" model="ir.actions.act_window">
+        <field name="name">Support Issues</field>
+        <field name="res_model">lms.support.issue</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No support issues yet.</p>
+            <p>Students submit issues from the LMS Support page . View and fix them here</p>
+        </field>
+    </record>
+    <menuitem id="menu_lms_support_issue"
+              name="Support Issues"
+              parent="school_lms.menu_lms_support"
+              action="action_lms_support_issue"
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_lms_subject_notification_tree" model="ir.ui.view">
+        <field name="name">lms.subject.notification.tree</field>
+        <field name="model">lms.subject.notification</field>
+        <field name="arch" type="xml">
+            <list string="Subject Notifications" create="1">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="subject_id"/>
+                <field name="date"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_lms_subject_notification_form" model="ir.ui.view">
+        <field name="name">lms.subject.notification.form</field>
+        <field name="model">lms.subject.notification</field>
+        <field name="arch" type="xml">
+            <form string="Subject Notification">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="subject_id"/>
+                            <field name="date"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="message" placeholder="Notification message shown on LMS for this subject."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_lms_subject_notification" model="ir.actions.act_window">
+        <field name="name">Subject Notifications</field>
+        <field name="res_model">lms.subject.notification</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add subject notifications.</p>
+            <p>These are shown on the LMS per subject (subject detail page and home).</p>
+        </field>
+    </record>
+    <menuitem id="menu_lms_subject_notification"
+              name="Subject Notifications"
+              parent="school_manegment_system.menu_school_management_root"
+              action="action_lms_subject_notification"
+              sequence="48"/>
+</odoo>

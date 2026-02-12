@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ========================= -->
+        <!-- Staff Head List View -->
+        <!-- ========================= -->
+        <record id="view_staff_head_list" model="ir.ui.view">
+            <field name="name">school.staff.head.list</field>
+            <field name="model">school.staff.head</field>
+            <field name="arch" type="xml">
+                <list string="Staff Heads">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="summary_time"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ========================= -->
+        <!-- Staff Head Form View -->
+        <!-- ========================= -->
+        <record id="view_staff_head_form" model="ir.ui.view">
+            <field name="name">school.staff.head.form</field>
+            <field name="model">school.staff.head</field>
+            <field name="arch" type="xml">
+                <form string="Staff Head">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Staff Head Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="summary_time" widget="float_time"
+                                       help="Time in 24-hour format (e.g., 18.0 for 6:00 PM)"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ========================= -->
+        <!-- Staff Head Action -->
+        <!-- ========================= -->
+        <record id="action_staff_head" model="ir.actions.act_window">
+            <field name="name">Staff Heads</field>
+            <field name="res_model">school.staff.head</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- ========================= -->
+        <!-- Menus -->
+        <!-- ========================= -->
+        <menuitem id="menu_staff_head" name="Staff Heads" parent="menu_school_settings_root" action="action_staff_head"
+                  sequence="90"/>
+
+    </data>
+</odoo>

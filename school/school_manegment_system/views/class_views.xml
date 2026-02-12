@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Class list View -->
+        <record id="view_class_list" model="ir.ui.view">
+            <field name="name">school.class.list</field>
+            <field name="model">school.class</field>
+            <field name="arch" type="xml">
+                <list string="Classes">
+                    <field name="name"/>
+                    <field name="section"/>
+                    <field name="year"/>
+                    <field name="display_name_full" string="Full Display"/>
+                    <field name="capacity"/>
+                    <field name="student_count"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Class Form View -->
+        <record id="view_class_form" model="ir.ui.view">
+            <field name="name">school.class.form</field>
+            <field name="model">school.class</field>
+            <field name="arch" type="xml">
+                <form string="Class">
+                    <sheet>
+                        <!-- Print Button Section (Inside Sheet) -->
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_print_timetable"
+                                    string="Print Time Table"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-print"
+                                    invisible="id == False"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Class Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="section"/>
+                                <field name="year"/>
+                                <field name="display_name_full" readonly="1"/>
+                                <field name="capacity"/>
+                                <field name="student_count" readonly="1"/>
+                                <field name="class_teacher_id"/>
+                                <field name="class_attendance_phone" 
+                                       placeholder="e.g., +923001234567"
+                                       help="Phone number for classwise attendance summary messages"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Students">
+                                <field name="student_ids"/>
+                            </page>
+                            <page string="Subjects">
+                                <field name="subject_ids"/>
+                            </page>
+                            <page string="Results">
+                                <field name="result_ids"/>
+                            </page>
+                            <page string="Time Table">
+                                <field name="timetable_ids"/>
+                            </page>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Class Action -->
+        <record id="action_class" model="ir.actions.act_window">
+            <field name="name">Classes</field>
+            <field name="res_model">school.class</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first class!
+                </p>
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_school_management_root" name="School Management" sequence="10"/>
+        <menuitem id="menu_school_settings_root" name="Settings" parent="menu_school_management_root" sequence="100"/>
+        
+        <menuitem id="menu_class_root"
+                  name="Classes"
+                  parent="menu_school_management_root"
+                  action="action_class"
+                  sequence="30"/>
+
+    </data>
+</odoo>

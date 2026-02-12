@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_school_fee" model="ir.actions.report">
+            <field name="name">School Fee Report</field>
+            <field name="model">school.fee</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_manegment_system.report_school_fee_document</field>
+            <field name="report_file">school_manegment_system.report_school_fee_document</field>
+            <field name="print_report_name">'School_fee_%s' % (object.name)</field>
+        </record>
+
+        <record id="paperformat_fee" model="report.paperformat">
+            <field name="name">School Fee Paperformat</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">25</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <template id="report_school_fee_document">
+            <t t-call="web.basic_layout">
+                <t t-set="doc" t-value="docs[0]"/>
+                <t t-set="company" t-value="doc.company_id or doc.env.company"/>
+
+                <div class="page">
+                    <!-- ONE ROW, THREE COLUMNS -->
+                    <div class="row" style="display:flex; gap:10px; justify-content:space-between;">
+
+                        <!-- Bank Copy Section -->
+                        <div class="col-4" style="border:1px solid black; padding:10px; min-height:250px; flex:1;">
+                            <table width="100%" style="margin-bottom: 10px;">
+                                <tr>
+                                    <td style="width:70%;">
+                                        <h6 t-esc="company.name"/>
+                                    </td>
+                                    <td style="width:30%; text-align:right;">
+                                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:50px;"/>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; font-weight:bold; height:50px;">Bank Copy</td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; height:50px">Bank Detail</td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr style="background-color:#fff; font-weight:bold;">
+                                    <td style="border:1px solid #000; padding:5px;">Bank Name</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.bank_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Account Number</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.bank_id.account_number"/></td>
+                                </tr>
+                                <tr><td colspan="2" style="height:50px;"></td></tr>
+
+                                <tr><td colspan="2" style="text-align:center; height:50px">Student Detail</td></tr>
+
+                                <tr><td colspan="2" style="height:50px;"></td></tr>
+
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Fee Reference</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.invoice_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Student Name</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.student_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Class</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.class_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Roll Number</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.roll_number"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Fee Type</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.fee_type"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Amount</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.amount"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Due Date</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.due_date"/></td>
+                                </tr>
+                                <tr><td colspan="2" style="height:40px;"></td></tr>
+
+                                <tr><td colspan="2" style="text-align:center; height:50px">Fee is Non Refundable / Non Transferable</td></tr>
+
+                                <tr><td colspan="2" style="height:80px;"></td></tr>
+
+                                <tr>
+                                    <th style="border:1px solid #000; padding:5px;">Cashier Officer</th>
+                                    <th style="border:1px solid #000; padding:5px;">Officer Signature</th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #000; padding:5px; height:50px;"></td>
+                                    <td style="border:1px solid #000; padding:5px; height:50px;"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Student Copy Section -->
+                        <div class="col-4" style="border:1px solid black; padding:10px; min-height:250px; flex:1;">
+                            <table width="100%" style="margin-bottom: 10px;">
+                                <tr>
+                                    <td style="width:50%;">
+                                        <h6 t-esc="company.name"/>
+                                    </td>
+                                    <td style="width:30%; text-align:right;">
+                                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:50px;"/>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; font-weight:bold; height:50px;">Student Copy</td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; height:50px">Bank Detail</td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr style="background-color:#fff; font-weight:bold;">
+                                    <td style="border:1px solid #000; padding:5px;">Bank Name</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.bank_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Account Number</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.bank_id.account_number"/></td>
+                                </tr>
+                                <tr><td colspan="2" style="height:50px;"></td></tr>
+
+                                <tr><td colspan="2" style="text-align:center; height:50px">Student Detail</td></tr>
+
+                                <tr><td colspan="2" style="height:50px;"></td></tr>
+
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Fee Reference</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.invoice_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Student Name</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.student_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Class</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.class_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Roll Number</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.roll_number"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Fee Type</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.fee_type"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Amount</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.amount"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Due Date</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.due_date"/></td>
+                                </tr>
+                                <tr><td colspan="2" style="height:40px;"></td></tr>
+
+                                <tr><td colspan="2" style="text-align:center; height:50px">Fee is Non Refundable / Non Transferable</td></tr>
+
+                                <tr><td colspan="2" style="height:80px;"></td></tr>
+
+                                <tr>
+                                    <th style="border:1px solid #000; padding:5px;">Cashier Officer</th>
+                                    <th style="border:1px solid #000; padding:5px;">Officer Signature</th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #000; padding:5px; height:50px;"></td>
+                                    <td style="border:1px solid #000; padding:5px; height:50px;"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Office Copy Section -->
+                        <div class="col-4" style="border:1px solid black; padding:10px; min-height:250px; flex:1;">
+                            <table width="100%" style="margin-bottom: 10px;">
+                                <tr>
+                                    <td style="width:50%;">
+                                        <h6 t-esc="company.name"/>
+                                    </td>
+                                    <td style="width:30%; text-align:right;">
+                                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:50px;"/>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; font-weight:bold; height:50px;">School Copy</td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; height:50px">Bank Detail</td>
+                                </tr>
+                                <tr><td colspan="2" style="height:30px;"></td></tr>
+                                <tr style="background-color:#fff; font-weight:bold;">
+                                    <td style="border:1px solid #000; padding:5px;">Bank Name</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.bank_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Account Number</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.bank_id.account_number"/></td>
+                                </tr>
+                                <tr><td colspan="2" style="height:50px;"></td></tr>
+
+                                <tr><td colspan="2" style="text-align:center; height:50px">Student Detail</td></tr>
+
+                                <tr><td colspan="2" style="height:50px;"></td></tr>
+
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Fee Reference</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.invoice_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Student Name</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.student_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Class</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.class_id.name"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Roll Number</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.roll_number"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Fee Type</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.fee_type"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Amount</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.amount"/></td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td style="border:1px solid #000; padding:5px;">Due Date</td>
+                                    <td style="border:1px solid #000; padding:5px;"><t t-esc="doc.due_date"/></td>
+                                </tr>
+                                <tr><td colspan="2" style="height:40px;"></td></tr>
+
+                                <tr><td colspan="2" style="text-align:center; height:50px">Fee is Non Refundable / Non Transferable</td></tr>
+
+                                <tr><td colspan="2" style="height:80px;"></td></tr>
+
+                                <tr>
+                                    <th style="border:1px solid #000; padding:5px;">Cashier Officer</th>
+                                    <th style="border:1px solid #000; padding:5px;">Officer Signature</th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #000; padding:5px; height:50px;"></td>
+                                    <td style="border:1px solid #000; padding:5px; height:50px;"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

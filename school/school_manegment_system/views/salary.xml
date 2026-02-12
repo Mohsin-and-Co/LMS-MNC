@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Salary List View -->
+        <record id="view_school_salary_list" model="ir.ui.view">
+            <field name="name">school.salary.list</field>
+            <field name="model">school.salary</field>
+            <field name="arch" type="xml">
+                <list string="Salaries"
+                      decoration-info="state == 'draft'"
+                      decoration-warning="state == 'pending'"
+                      decoration-success="state == 'paid'"
+                      decoration-danger="state == 'overdue'">
+                    <field name="name"/>
+                    <field name="teacher_id"/>
+                    <field name="month"/>
+                    <field name="year"/>
+                    <field name="basic_salary" sum="Total Basic Salary"/>
+                    <field name="allowance" sum="Total Allowance"/>
+                    <field name="deduction" sum="Total Deduction"/>
+                    <field name="net_salary" sum="Total Net Salary"/>
+                    <field name="state" widget="badge" decoration-success="state == 'paid'" decoration-warning="state == 'pending'" decoration-danger="state == 'overdue'" decoration-info="state == 'draft'"/>
+                    <field name="payment_date"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Salary Form View -->
+        <record id="view_school_salary_form" model="ir.ui.view">
+            <field name="name">school.salary.form</field>
+            <field name="model">school.salary</field>
+            <field name="arch" type="xml">
+                <form string="School Salary">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_pay" string="Mark as Paid" type="object" class="btn-primary" invisible="state not in ['pending', 'overdue']"/>
+                        <button name="action_overdue" string="Mark as Overdue" type="object" class="btn-secondary" invisible="state != 'pending'"/>
+                        <button name="action_print_salary" type="object" string="Print Salary" class="btn-secondary" icon="fa-print"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending,paid,overdue"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="teacher_id" options="{'no_create': True}"/>
+                                <field name="month"/>
+                                <field name="year"/>
+                            </group>
+                            <group>
+                                <field name="invoice_id" readonly="1" options="{'no_create': True}"/>
+                                <field name="payment_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Salary Details">
+                            <group>
+                                <field name="basic_salary"/>
+                                <field name="allowance"/>
+                            </group>
+                            <group>
+                                <field name="deduction"/>
+                                <field name="net_salary" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Salary Search View -->
+        <record id="view_school_salary_search" model="ir.ui.view">
+            <field name="name">school.salary.search</field>
+            <field name="model">school.salary</field>
+            <field name="arch" type="xml">
+                <search string="Search Salaries">
+                    <field name="name"/>
+                    <field name="teacher_id"/>
+                    <field name="month"/>
+                    <field name="year"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]"/>
+                    <filter string="Overdue" name="overdue" domain="[('state', '=', 'overdue')]"/>
+                    <separator/>
+                    <filter string="This Year" name="this_year" domain="[('year', '=', datetime.now().year)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Teacher" name="group_teacher" context="{'group_by': 'teacher_id'}"/>
+                        <filter string="Month" name="group_month" context="{'group_by': 'month'}"/>
+                        <filter string="Year" name="group_year" context="{'group_by': 'year'}"/>
+                        <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Salary Action -->
+        <record id="action_school_salary" model="ir.actions.act_window">
+            <field name="name">Salaries</field>
+            <field name="res_model">school.salary</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_school_salary_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first salary record!
+                </p>
+                <p>
+                    Manage teacher salaries, track payments, and generate reports.
+                </p>
+            </field>
+        </record>
+
+        <!-- Salary Menu Items -->
+        <menuitem id="menu_salary_root"
+                  name="Salaries"
+                  parent="menu_school_management_root"
+                  sequence="60"/>
+        <menuitem id="menu_salary"
+                  name="Salaries"
+                  parent="menu_salary_root"
+                  action="action_school_salary"
+                  sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Library Book Issue Report -->
+        <record id="action_report_library_issue" model="ir.actions.report">
+            <field name="name">Book Issue Receipt</field>
+            <field name="model">library.book.issue</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_manegment_system.report_library_issue_template</field>
+            <field name="report_file">school_manegment_system.report_library_issue_template</field>
+            <field name="binding_model_id" ref="model_library_book_issue"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">'Book_Issue_%s' % (object.name)</field>
+        </record>
+
+        <!-- Report Template -->
+        <template id="report_library_issue_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="issue">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 style="text-align:center; margin-bottom: 30px;">Book Issue Receipt</h2>
+                                    
+                                    <table class="table table-bordered" style="width: 100%; margin-bottom: 20px;">
+                                        <tr>
+                                            <td style="padding: 10px; width: 30%;"><strong>Issue Reference:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Student:</strong></td>
+                                            <td style="padding: 10px;">
+                                                <t t-esc="issue.student_id.name"/>
+                                                <t t-if="issue.student_id.roll_number"> (Roll: <t t-esc="issue.student_id.roll_number"/>)</t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Class:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.student_id.class_id.name or 'N/A'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Book Title:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.book_id.title"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Author:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.book_id.author"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Category:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.category_id.name or 'N/A'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>ISBN:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.book_id.isbn or 'N/A'"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Issue Date:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.issue_date"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Due Date:</strong></td>
+                                            <td style="padding: 10px;">
+                                                <t t-esc="issue.due_date"/>
+                                                <t t-if="issue.days_overdue > 0" style="color: red;">
+                                                    <strong> (Overdue: <t t-esc="issue.days_overdue"/> days)</strong>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="issue.return_date">
+                                            <td style="padding: 10px;"><strong>Return Date:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.return_date"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Status:</strong></td>
+                                            <td style="padding: 10px;"><t t-esc="issue.state.upper()"/></td>
+                                        </tr>
+                                        <tr t-if="issue.fine_amount > 0">
+                                            <td style="padding: 10px;"><strong>Fine Amount:</strong></td>
+                                            <td style="padding: 10px; color: red;"><strong><t t-esc="issue.fine_amount"/> PKR</strong></td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <div style="margin-top: 30px; padding: 15px; background-color: #f5f5f5; border-radius: 5px;">
+                                        <p><strong>Important Notes:</strong></p>
+                                        <ul>
+                                            <li>Please return the book on or before the due date to avoid fines.</li>
+                                            <li>Fine per day: <t t-esc="issue.fine_per_day"/> PKR</li>
+                                            <li>Handle the book with care. Any damage or loss will be charged.</li>
+                                            <li>For any queries, please contact the library.</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div style="margin-top: 40px; text-align: center;">
+                                        <p style="border-top: 1px solid #ddd; padding-top: 20px;">
+                                            <strong>Issued By:</strong> <t t-esc="issue.issue_by.name or 'N/A'"/>
+                                            <t t-if="issue.return_by"> | <strong>Returned By:</strong> <t t-esc="issue.return_by.name"/></t>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

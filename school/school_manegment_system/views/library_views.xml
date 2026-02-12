@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Book Category List View -->
+        <record id="view_library_category_list" model="ir.ui.view">
+            <field name="name">library.category.list</field>
+            <field name="model">library.book.category</field>
+            <field name="arch" type="xml">
+                <list string="Book Categories">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="book_count" string="Books"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Book Category Form View -->
+        <record id="view_library_category_form" model="ir.ui.view">
+            <field name="name">library.category.form</field>
+            <field name="model">library.book.category</field>
+            <field name="arch" type="xml">
+                <form string="Book Category">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="book_count" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Category description..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Book Category Action -->
+        <record id="action_library_category" model="ir.actions.act_window">
+            <field name="name">Book Categories</field>
+            <field name="res_model">library.book.category</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Library Book List View -->
+        <record id="view_library_book_list" model="ir.ui.view">
+            <field name="name">library.book.list</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <list string="Library Books">
+                    <field name="title"/>
+                    <field name="author"/>
+                    <field name="category_id"/>
+                    <field name="isbn"/>
+                    <field name="total_copies"/>
+                    <field name="available_copies"/>
+                    <field name="current_issues"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Library Book Form View -->
+        <record id="view_library_book_form" model="ir.ui.view">
+            <field name="name">library.book.form</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <form string="Library Book">
+                    <header>
+                        <button name="action_view_issues" string="View Issues" type="object" class="oe_highlight" 
+                                invisible="current_issues == 0"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="title"/>
+                                <field name="author"/>
+                                <field name="isbn"/>
+                                <field name="category_id" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="publisher"/>
+                                <field name="edition"/>
+                                <field name="price"/>
+                                <field name="purchase_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="total_copies"/>
+                                <field name="available_copies" readonly="1"/>
+                                <field name="current_issues" readonly="1"/>
+                                <field name="issue_count" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="location" placeholder="Shelf/Location"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Book description..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Library Book Action -->
+        <record id="action_library_book" model="ir.actions.act_window">
+            <field name="name">Library Books</field>
+            <field name="res_model">library.book</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Book Issue List View -->
+        <record id="view_library_issue_list" model="ir.ui.view">
+            <field name="name">library.issue.list</field>
+            <field name="model">library.book.issue</field>
+            <field name="arch" type="xml">
+                <list string="Book Issues">
+                    <field name="name"/>
+                    <field name="student_id"/>
+                    <field name="book_id"/>
+                    <field name="category_id"/>
+                    <field name="issue_date"/>
+                    <field name="due_date"/>
+                    <field name="return_date"/>
+                    <field name="state" widget="badge" decoration-success="state == 'returned'" 
+                           decoration-danger="state in ('lost', 'damaged')" 
+                           decoration-warning="state == 'issued' and days_overdue > 0"/>
+                    <field name="days_overdue"/>
+                    <field name="fine_amount"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Book Issue Form View -->
+        <record id="view_library_issue_form" model="ir.ui.view">
+            <field name="name">library.issue.form</field>
+            <field name="model">library.book.issue</field>
+            <field name="arch" type="xml">
+                <form string="Book Issue">
+                    <header>
+                        <button name="action_return" string="Return Book" type="object" class="oe_highlight"
+                                invisible="state != 'issued'"/>
+                        <button name="action_mark_lost" string="Mark as Lost" type="object"
+                                invisible="state != 'issued'"/>
+                        <button name="action_mark_damaged" string="Mark as Damaged" type="object"
+                                invisible="state != 'issued'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="issued,returned"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="student_id" options="{'no_create': True}"/>
+                                <field name="book_id" options="{'no_create': True}" 
+                                       domain="[('available_copies', '>', 0)]"/>
+                                <field name="category_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="issue_date"/>
+                                <field name="due_date"/>
+                                <field name="return_date" readonly="1"/>
+                                <field name="fine_per_day"/>
+                                <field name="days_overdue" readonly="1"/>
+                                <field name="fine_amount" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="issue_by" readonly="1"/>
+                                <field name="return_by" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remark" placeholder="Additional remarks..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Book Issue Action -->
+        <record id="action_library_issue" model="ir.actions.act_window">
+            <field name="name">Book Issues</field>
+            <field name="res_model">library.book.issue</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'default_state': 'issued', 'default_issue_date': context_today()}</field>
+        </record>
+
+        <!-- Library Menu - Separate Top Level Menu -->
+        <menuitem id="menu_library_root" name="Library" sequence="15"/>
+        <menuitem id="menu_library_books" name="Books" parent="menu_library_root" action="action_library_book" sequence="10"/>
+        <menuitem id="menu_library_categories" name="Categories" parent="menu_library_root" action="action_library_category" sequence="20"/>
+        <menuitem id="menu_library_issues" name="Book Issues" parent="menu_library_root" action="action_library_issue" sequence="30"/>
+
+    </data>
+</odoo>

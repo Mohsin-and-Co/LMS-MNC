@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="qr_scan_result" name="QR Scan Result">
+        <t t-call="school_manegment_system.school_layout">
+            <div class="container mt16 mb16">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Success Message at Top -->
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 9999; min-width: 400px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            <strong><t t-esc="message"/></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.style.display='none';"></button>
+                        </div>
+                        
+                        <h2 class="text-center">QR Scan Result</h2>
+
+                        <!-- Display attendance information if available -->
+                        <t t-if="attendance">
+                            <div class="card mb-2 p-3 text-left">
+                                <!-- Student Attendance -->
+                                <t t-if="attendance._name == 'school.attendance'">
+                                    <p><strong>Student:</strong> <span t-esc="attendance.student_id.name"/></p>
+                                    <p><strong>Roll Number:</strong> <span t-esc="attendance.student_id.roll_number or 'N/A'"/></p>
+                                    <p t-if="attendance.date"><strong>Date:</strong> <span t-esc="attendance.date"/></p>
+                                    <p t-if="attendance.status"><strong>Status:</strong> <span t-esc="attendance.status"/></p>
+                                    <t t-if="attendance.remark">
+                                        <p><strong>Remark:</strong> <span t-esc="attendance.remark"/></p>
+                                    </t>
+                                </t>
+
+                                <!-- Staff Attendance -->
+                                <t t-if="attendance._name == 'school.staff.attendance'">
+                                    <p><strong>Staff:</strong> <span t-esc="attendance.staff_id.name"/></p>
+                                    <p><strong>Employee ID:</strong> <span t-esc="attendance.staff_id.employee_id or 'N/A'"/></p>
+                                    <p t-if="attendance.date"><strong>Date:</strong> <span t-esc="attendance.date"/></p>
+                                    <p t-if="attendance.check_in"><strong>Check In:</strong> <span t-esc="attendance.check_in"/></p>
+                                    <p t-if="attendance.check_out"><strong>Check Out:</strong> <span t-esc="attendance.check_out"/></p>
+                                    <p t-if="attendance.status"><strong>Status:</strong> <span t-esc="attendance.status"/></p>
+                                    <t t-if="attendance.remark">
+                                        <p><strong>Remark:</strong> <span t-esc="attendance.remark"/></p>
+                                    </t>
+                                </t>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="card mb-2 p-3 text-center">
+                                <p><strong>Name:</strong> <span t-esc="name or 'N/A'"/></p>
+                                <p><strong>Type:</strong> <span t-esc="type.upper() if type else 'N/A'"/></p>
+                            </div>
+                        </t>
+
+                        <div class="mt16 text-center">
+                            <a href="/school/scan" class="btn btn-primary">
+                                <i class="fa fa-qrcode"></i>
+                                Scan Another
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                setTimeout(function(){
+                    var alert = document.querySelector('.alert-success');
+                    if(alert) {
+                        alert.style.transition = 'opacity 0.5s';
+                        alert.style.opacity = '0';
+                        setTimeout(function(){ alert.style.display = 'none'; }, 500);
+                    }
+                }, 5000);
+            </script>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lms_subject_material_user,lms.subject.material.user,model_lms_subject_material,base.group_user,1,1,1,1
+access_lms_subject_material_public,lms.subject.material.public,model_lms_subject_material,base.group_public,1,0,0,0
+access_lms_student_document_user,lms.student.document.user,model_lms_student_document,base.group_user,1,1,1,1
+access_lms_student_document_portal,lms.student.document.portal,model_lms_student_document,base.group_portal,1,0,1,0
+access_lms_support_user,lms.support.user,model_lms_support,base.group_user,1,1,1,1
+access_lms_support_public,lms.support.public,model_lms_support,base.group_public,1,0,0,0
+access_lms_calendar_event_user,lms.calendar.event.user,model_lms_calendar_event,base.group_user,1,1,1,1
+access_lms_calendar_event_public,lms.calendar.event.public,model_lms_calendar_event,base.group_public,1,0,0,0
+access_lms_support_issue_user,lms.support.issue.user,model_lms_support_issue,base.group_user,1,1,1,1
+access_lms_support_issue_portal,lms.support.issue.portal,model_lms_support_issue,base.group_portal,1,0,1,0
+access_lms_subject_notification_user,lms.subject.notification.user,model_lms_subject_notification,base.group_user,1,1,1,1
+access_lms_subject_notification_public,lms.subject.notification.public,model_lms_subject_notification,base.group_public,1,0,0,0

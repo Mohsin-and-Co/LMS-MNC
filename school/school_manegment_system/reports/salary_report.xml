@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_school_salary" model="ir.actions.report">
+            <field name="name">School Salary Report</field>
+            <field name="model">school.salary</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_manegment_system.report_school_salary_document</field>
+            <field name="report_file">school_manegment_system.report_school_salary_document</field>
+            <field name="print_report_name">'School_salary_%s' % (object.name)</field>
+        </record>
+
+        <template id="report_school_salary_document">
+    <t t-call="web.basic_layout">
+        <t t-set="doc" t-value="docs[0]"/>
+        <t t-set="company" t-value="doc.company_id or doc.env.company"/>
+
+        <div class="page">
+            <div style="text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 20px;">
+                Teacher Salary Slip
+            </div>
+
+            <!-- Company Info -->
+            <table width="100%">
+                <tr>
+                    <td style="width:70%; font-size:14px; ">
+                        <t t-esc="company.name"/>
+                    </td>
+                    <td style="width:30%; text-align:right;">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:50px;"/>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Header Info -->
+            <table class="table table-bordered" width="100%" style="margin-bottom: 20px; border: 1px solid black; border-collapse: collapse;">
+                <tr>
+                    <td style="width:25%; background:#e6f2f2; padding:6px;">Personnel No.</td>
+                    <td style="width:25%; padding:6px;" t-esc="doc.teacher_id.id"/>
+                    <td style="width:25%; background:#e6f2f2; padding:6px;">Name</td>
+                    <td style="width:25%; padding:6px;" t-esc="doc.teacher_id.name"/>
+                </tr>
+                <tr>
+                    <td style="background:#e6f2f2; padding:6px;">Bank</td>
+                    <td style="padding:6px;" t-esc=""/>
+                    <td style="background:#e6f2f2; padding:6px;">Bank A/c No.</td>
+                    <td style="padding:6px;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td style="background:#e6f2f2; padding:6px;">DOB</td>
+                    <td style="padding:6px;" t-esc=""/>
+                    <td style="background:#e6f2f2; padding:6px;">LOP Days</td>
+                    <td style="padding:6px;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td style="background:#e6f2f2; padding:6px;">PF No.</td>
+                    <td style="padding:6px;" t-esc=""/>
+                    <td style="background:#e6f2f2; padding:6px;">STD Days</td>
+                    <td style="padding:6px;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td style="background:#e6f2f2; padding:6px;">Location</td>
+                    <td style="padding:6px;" t-esc=""/>
+                    <td style="background:#e6f2f2; padding:6px;">Worked Days</td>
+                    <td style="padding:6px;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td style="background:#e6f2f2; padding:6px;">Department</td>
+                    <td style="padding:6px;" t-esc=""/>
+                    <td style="background:#e6f2f2; padding:6px;">Designation</td>
+                    <td style="padding:6px;" t-esc=""/>
+                </tr>
+            </table>
+
+            <!-- Earnings and Deductions -->
+            <table class="table table-bordered" width="100%" style="border: 1px solid black; border-collapse: collapse; margin-bottom: 20px;">
+                <tr>
+                    <th style="background:#e6f2f2; text-align:left; padding:6px;">Earnings</th>
+                    <th style="background:#e6f2f2; text-align:right; padding:6px;">Amount (Rs.)</th>
+                    <th style="background:#e6f2f2; text-align:left; padding:6px;">Deductions</th>
+                    <th style="background:#e6f2f2; text-align:right; padding:6px;">Amount (Rs.)</th>
+                </tr>
+
+                <tr>
+                    <td>Basic</td>
+                    <td style="text-align:right;" t-esc="doc.basic_salary"/>
+                    <td>Provident Fund</td>
+                    <td style="text-align:right;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td>House Rent Allowance</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td>Professional Tax</td>
+                    <td style="text-align:right;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td>Special Allowance</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td>Income Tax</td>
+                    <td style="text-align:right;" t-esc=""/>
+                </tr>
+                <tr>
+                    <td>Conveyance</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td>Additional Special Allowance</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td>Overtime/Shift Allowance</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td>Stat Bonus</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td></td><td></td>
+                </tr>
+
+                <tr style="font-weight:bold; background:#f9f9f9;">
+                    <td>Gross Earning</td>
+                    <td style="text-align:right;" t-esc=""/>
+                    <td>Gross Deductions</td>
+                    <td style="text-align:right;" t-esc=""/>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <td colspan="2" style="text-align:center;">Net Pay</td>
+                    <td colspan="2" style="text-align:right;" t-esc="doc.net_salary"/>
+                </tr>
+            </table>
+        </div>
+    </t>
+        </template>
+    </data>
+</odoo>

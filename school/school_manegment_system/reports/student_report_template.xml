@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+     <record id="student_report_action" model="ir.actions.report">
+            <field name="name">Student Report</field>
+            <field name="model">school.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_manegment_system.student_report</field>
+            <field name="report_file">school_manegment_system.student_report</field>
+               <field name="attachment"/>
+            <field name="binding_model_id" ref="model_school_student"/>
+            <field name="binding_type">report</field>
+<!--                 <field name="paperformat_id" ref="school_manegment_system.paperformat_student"/>-->
+
+        </record>
+     <record id="paperformat_student" model="report.paperformat">
+            <field name="name">A4</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+    <template id="student_report">
+    <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-5" style="border:1px solid black;height:150px">
+
+
+
+
+                        </div>
+                        <div class="col-5 text-center" style="border:1px solid black;height:150px; margin-left:22px">
+
+                        </div>
+                    </div>
+                </div>
+        </t>
+
+    </t>
+    </template>
+    </data>
+</odoo>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Insert CSS into the head (website.layout exists on all installations) -->
+    <template id="portal_dashboard_css" inherit_id="website.layout" name="Portal Dashboard CSS">
+        <xpath expr="//head" position="inside">
+            <style>
+                .o_portal_dashboard_card {
+                background: #ffffff;
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+                margin: 18px 0;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                }
+                .o_portal_dashboard_logo { width:72px; height:auto; border-radius:8px; }
+                .o_portal_dashboard_card .btn { white-space:nowrap; }
+                @media (max-width: 900px) {
+                .o_portal_dashboard_card { flex-direction: column; text-align: center; }
+                .o_portal_dashboard_card .btn { width: 100%; }
+                }
+            </style>
+        </xpath>
+    </template>
+
+    <!-- Insert the Dashboard card into the main content only when path is /my -->
+    <template id="portal_dashboard_inject" inherit_id="website.layout" name="Inject Dashboard Card on /my">
+        <!-- put inside main so it appears in page body -->
+        <xpath expr="//main" position="inside">
+            <!-- render only when user is on portal 'my' (path /my or startswith /my/) -->
+            <t t-if="request and (request.httprequest.path == '/my' or request.httprequest.path.startswith('/my/'))">
+                <div class="container">
+                    <div class="o_portal_dashboard_card col-md-6 order-2">
+                        <div>
+                            <img t-attf-src="data:image/png;base64,{{env.company.logo or ''}}" alt="Logo"
+                                 class="o_portal_dashboard_logo" t-if="env.company.logo"/>
+                            <div class="o_portal_dashboard_logo" style="width: 72px; height: 72px; background: #1a5490; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;" t-if="not env.company.logo">
+                                <t t-esc="(env.company.name or 'School')[0]"/>
+                            </div>
+                        </div>
+                        <div style="flex:1">
+                            <h3 style="margin:0 0 6px 0;">Result</h3>
+                        </div>
+                        <div>
+                            <a href="/school/my/results" class="btn btn-primary btn-lg">Result</a>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Attendance Sequence -->
+        <record id="seq_school_attendance" model="ir.sequence">
+            <field name="name">School Attendance</field>
+            <field name="code">school.attendance</field>
+            <field name="prefix">ATT/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo> 

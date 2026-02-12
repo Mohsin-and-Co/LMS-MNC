@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QR Code Manual Entry Wizard Form View -->
+        <record id="view_qr_scanner_wizard_form" model="ir.ui.view">
+            <field name="name">school.qr.scanner.wizard.form</field>
+            <field name="model">school.qr.scanner.wizard</field>
+            <field name="arch" type="xml">
+                <form string="QR Code - Student Attendance">
+                    <sheet>
+                        <div class="oe_title">
+                            <h2>
+                                <i class="fa fa-qrcode"/> Enter QR Code
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="qr_code" placeholder="STUDENT_XXXXX - Enter QR code manually"
+                                       options="{'no_create': True}"
+                                       widget="char"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="status"/>
+                            </group>
+                            <group>
+                                <field name="student_id" readonly="1" options="{'no_create': True}"/>
+                                <field name="student_name" readonly="1"/>
+                                <field name="class_id" readonly="1" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remark" placeholder="Optional remarks..."/>
+                        </group>
+                        <group>
+                            <field name="message" readonly="1" nolabel="1"
+                                   widget="text"
+                                   placeholder="Student information will appear here after entering QR code"/>
+                        </group>
+                        <group>
+                            <field name="attendance_id" readonly="1"
+                                   string="Attendance Reference"
+                                   placeholder="Attendance reference will appear here after creation"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_scan_and_create_attendance" string="Create Attendance" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- QR Scanner Wizard Action -->
+        <record id="action_qr_scanner_wizard" model="ir.actions.act_window">
+            <field name="name">QR Code - Student Attendance</field>
+            <field name="res_model">school.qr.scanner.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_qr_scanner_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_qr_scanner"
+                  name="QR Code - Student Attendance"
+                  parent="menu_attendance_root"
+                  action="action_qr_scanner_wizard"
+                  sequence="10"/>
+    </data>
+</odoo>

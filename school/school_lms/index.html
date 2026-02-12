@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student LMS - Learning Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>Student LMS</h1>
+        </div>
+        <div class="nav-right">
+            <div class="student-profile" id="studentProfile">
+                <img src="https://via.placeholder.com/40" alt="Student Photo" class="student-photo" id="studentPhoto">
+                <span class="student-name" id="studentName">John Doe</span>
+                <i class="fas fa-chevron-down"></i>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="openChangePassword(); return false;">
+                        <i class="fas fa-key"></i> Change Password
+                    </a>
+                    <a href="#" onclick="logout(); return false;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="#" onclick="navigate('home'); return false;" class="active" data-page="home">
+                <i class="fas fa-home"></i> Home
+            </a></li>
+            <li><a href="#" onclick="navigate('fee'); return false;" data-page="fee">
+                <i class="fas fa-money-bill-wave"></i> Fee
+            </a></li>
+            <li><a href="#" onclick="navigate('calendar'); return false;" data-page="calendar">
+                <i class="fas fa-calendar-alt"></i> Calendar
+            </a></li>
+            <li><a href="#" onclick="navigate('timetable'); return false;" data-page="timetable">
+                <i class="fas fa-clock"></i> Time Table
+            </a></li>
+            <li><a href="#" onclick="navigate('result'); return false;" data-page="result">
+                <i class="fas fa-chart-line"></i> Result
+            </a></li>
+            <li><a href="#" onclick="navigate('support'); return false;" data-page="support">
+                <i class="fas fa-headset"></i> Support
+            </a></li>
+            <li><a href="#" onclick="logout(); return false;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Home Page -->
+        <div class="page" id="page-home">
+            <h2>My Subjects</h2>
+            <div class="subjects-grid" id="subjectsGrid">
+                <!-- Subjects will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Subject Detail Page -->
+        <div class="page hidden" id="page-subject-detail">
+            <button class="back-btn" onclick="navigate('home'); return false;">
+                <i class="fas fa-arrow-left"></i> Back to Subjects
+            </button>
+            <div class="teacher-detail-card" id="teacherDetailCard">
+                <!-- Teacher details will be loaded here -->
+            </div>
+            <div class="subject-materials" id="subjectMaterials">
+                <h3>Subject Materials</h3>
+                <div class="materials-tabs">
+                    <button class="tab-btn active" onclick="showMaterialTab('documents')">Documents</button>
+                    <button class="tab-btn" onclick="showMaterialTab('videos')">Videos</button>
+                    <button class="tab-btn" onclick="showMaterialTab('updates')">Updates</button>
+                </div>
+                <div class="materials-content" id="materialsContent">
+                    <!-- Materials will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Fee Page -->
+        <div class="page hidden" id="page-fee">
+            <h2>Fee Information</h2>
+            <div class="fee-container" id="feeContainer">
+                <!-- Fee details will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Calendar Page -->
+        <div class="page hidden" id="page-calendar">
+            <h2>Academic Calendar</h2>
+            <div class="calendar-container" id="calendarContainer">
+                <!-- Calendar will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Time Table Page -->
+        <div class="page hidden" id="page-timetable">
+            <h2>Time Table</h2>
+            <div class="timetable-container" id="timetableContainer">
+                <!-- Time table will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Result Page -->
+        <div class="page hidden" id="page-result">
+            <h2>My Results</h2>
+            <div class="result-container" id="resultContainer">
+                <!-- Results will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Support Page -->
+        <div class="page hidden" id="page-support">
+            <h2>Support & Help</h2>
+            <div class="support-container" id="supportContainer">
+                <!-- Support content will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Change Password Modal -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="close-btn" onclick="closeChangePassword(); return false;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm" onsubmit="changePassword(event); return false;">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeChangePassword(); return false;">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

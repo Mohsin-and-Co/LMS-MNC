@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Groups are defined in security/school_security.xml -->
+        <!-- This file is intentionally minimal -->
+    </data>
+</odoo>

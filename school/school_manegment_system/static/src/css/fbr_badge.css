@@ -1,0 +1,28 @@
+/* Base style */
+.o_field_badge.fbr_status_text {
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    padding: 4px 10px !important;
+    text-transform: capitalize !important;
+    display: inline-block !important;
+    min-width: 180px;
+    text-align: center;
+}
+
+/* Submitted or Sent (green) */
+.o_field_badge.fbr_status_text.o_badge_success {
+    background-color: #198754 !important;
+    color: #fff !important;
+}
+
+/* Not Submitted (red) */
+.o_field_badge.fbr_status_text.o_badge_danger {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+/* Failed (yellow) */
+.o_field_badge.fbr_status_text.o_badge_warning {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+}

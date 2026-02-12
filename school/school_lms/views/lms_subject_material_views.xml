@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_lms_subject_material_tree" model="ir.ui.view">
+        <field name="name">lms.subject.material.tree</field>
+        <field name="model">lms.subject.material</field>
+        <field name="arch" type="xml">
+            <list string="LMS Materials" create="1" edit="1" delete="1">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="subject_id"/>
+                <field name="material_type"/>
+                <field name="attachment_filename" string="File" optional="show"/>
+                <field name="url" string="Video URL" optional="hide" column_invisible="1"/>
+                <field name="publish_date"/>
+                <field name="description" column_invisible="1"/>
+                <field name="attachment_id" column_invisible="1"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_lms_subject_material_form" model="ir.ui.view">
+        <field name="name">lms.subject.material.form</field>
+        <field name="model">lms.subject.material</field>
+        <field name="arch" type="xml">
+            <form string="LMS Material" create="1" edit="1" delete="1">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Title"/>
+                            <field name="subject_id"/>
+                            <field name="material_type"/>
+                            <field name="sequence"/>
+                            <field name="publish_date"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <label for="file_upload" string="Upload File"/>
+                            <field name="file_upload" filename="file_name" nolabel="1"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="url" string="Video URL" placeholder="e.g. https://www.youtube.com/watch?v=..." invisible="material_type != 'video'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <div class="alert alert-info mb-0" role="alert">
+                            <strong>LMS:</strong> Use the Upload File button above for Document, Pictures/Images or Video. Students will see and download the file on the subject page. Video URL is optional for external links only.
+                        </div>
+                    </group>
+                    <field name="description" placeholder="Description (optional)"/>
+                    <field name="attachment_id" column_invisible="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_lms_subject_material" model="ir.actions.act_window">
+        <field name="name">LMS Subject Materials</field>
+        <field name="res_model">lms.subject.material</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_material_type': 'document'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create documents, pictures/images or videos per subject.</p>
+            <p>Students see these in the LMS portal when they open a subject.</p>
+        </field>
+    </record>
+    <menuitem id="menu_lms_materials"
+              name="LMS Materials"
+              parent="school_manegment_system.menu_school_management_root"
+              action="action_lms_subject_material"
+              sequence="45"/>
+</odoo>

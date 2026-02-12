@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequence for Student Admission Numbers -->
+        <record id="seq_school_student" model="ir.sequence">
+            <field name="name">Student Admission Number</field>
+            <field name="code">school.student</field>
+            <field name="prefix">ADM/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <!-- Sequence for Student Roll Numbers -->
+        <record id="seq_school_student_roll" model="ir.sequence">
+            <field name="name">Student Roll Number</field>
+            <field name="code">school.student.roll</field>
+            <field name="prefix">ROLL/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <!-- Sequence for School Salaries -->
+        <record id="seq_school_salary" model="ir.sequence">
+            <field name="name">School Salary Number</field>
+            <field name="code">school.salary</field>
+            <field name="prefix">SAL/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    <record id="seq_school_fee" model="ir.sequence">
+        <field name="name">School Fee</field>
+        <field name="code">school.fee</field>
+        <field name="prefix">FEE/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+        <field name="implementation">no_gap</field>
+    </record>
+    
+    <!-- Sequence for Staff Attendance -->
+    <record id="seq_school_staff_attendance" model="ir.sequence">
+        <field name="name">Staff Attendance</field>
+        <field name="code">school.staff.attendance</field>
+        <field name="prefix">STAFF-ATT/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    
+    <!-- Sequence for Teacher Employee ID -->
+    <record id="seq_school_teacher_employee" model="ir.sequence">
+        <field name="name">Teacher Employee ID</field>
+        <field name="code">school.teacher.employee</field>
+        <field name="prefix">EMP/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    
+    <!-- Sequence for Library Book Issue -->
+    <record id="seq_library_book_issue" model="ir.sequence">
+        <field name="name">Library Book Issue</field>
+        <field name="code">library.book.issue</field>
+        <field name="prefix">LIB/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    </data>
+</odoo>

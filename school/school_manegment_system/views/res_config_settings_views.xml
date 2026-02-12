@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Salary Settings Form View -->
+        <record id="view_school_salary_settings_form" model="ir.ui.view">
+            <field name="name">school.salary.settings.form</field>
+            <field name="model">school.salary.settings</field>
+            <field name="arch" type="xml">
+                <form string="School Salary Settings">
+                    <group>
+                        <field name="salary_expense_account_id"/>
+                        <field name="salary_payable_account_id"/>
+                    </group>
+                    <footer>
+                        <button string="Save" type="object" name="set_values" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Action -->
+        <record id="action_school_salary_settings" model="ir.actions.act_window">
+            <field name="name">Salary Settings</field>
+            <field name="res_model">school.salary.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Menus -->
+<!--        <menuitem id="menu_administration_root" name="Administration"/>-->
+<!--        <menuitem id="menu_settings_root"-->
+<!--                  name="Settings"-->
+<!--                  parent="menu_administration_root"-->
+<!--                  sequence="20"/>-->
+<!--        <menuitem id="menu_salary_settings"-->
+<!--                  name="Salary Settings"-->
+<!--                  parent="menu_settings_root"-->
+<!--                  action="action_school_salary_settings"-->
+<!--                  sequence="10"/>-->
+    </data>
+</odoo>

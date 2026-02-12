@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Salary Menu (only admin can see) -->
+        <record id="menu_salary" model="ir.ui.menu">
+            <field name="name">Salary</field>
+            <field name="groups_id" eval="[(6,0,[ref('custom_school_access.group_school_admin')])]"/>
+        </record>
+
+        <!-- Bank Menu (only admin) -->
+        <record id="menu_bank" model="ir.ui.menu">
+            <field name="name">Bank</field>
+            <field name="groups_id" eval="[(6,0,[ref('custom_school_access.group_school_admin')])]"/>
+        </record>
+
+        <!-- Class Menu (only admin) -->
+        <record id="menu_class" model="ir.ui.menu">
+            <field name="name">Class</field>
+            <field name="groups_id" eval="[(6,0,[ref('custom_school_access.group_school_admin')])]"/>
+        </record>
+
+        <!-- Teacher Menu (only admin) -->
+        <record id="menu_teacher" model="ir.ui.menu">
+            <field name="name">Teacher</field>
+            <field name="groups_id" eval="[(6,0,[ref('custom_school_access.group_school_admin')])]"/>
+        </record>
+
+        <!-- Example menu visible to ALL (both admin + users) -->
+        <record id="menu_students" model="ir.ui.menu">
+            <field name="name">Students</field>
+            <field name="groups_id" eval="[(6,0,[ref('custom_school_access.group_school_admin'), ref('custom_school_access.group_school_user')])]"/>
+        </record>
+    </data>
+</odoo>

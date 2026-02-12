@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!-- Paper Format -->
+    <record id="paperformat_result" model="report.paperformat">
+        <field name="name">A4 School Result</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">110</field>
+    </record>
+
+    <!-- Report Action -->
+    <record id="report_school_result" model="ir.actions.report">
+        <field name="name">School Result Report</field>
+        <field name="model">school.result</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_manegment_system.report_school_result_template</field>
+        <field name="report_file">school_manegment_system.report_school_result_template</field>
+        <field name="print_report_name">'School_Result_%s' % (object.student_id.name)</field>
+        <field name="paperformat_id" ref="school_manegment_system.paperformat_result"/>
+        <field name="binding_model_id" ref="model_school_result"/>
+        <field name="binding_type">report</field>
+    </record>
+
+  <!-- Report Template -->
+<template id="report_school_result_template">
+    <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="doc">
+            <t t-set="company" t-value="doc.company_id or doc.env.company"/>
+            <div class="page">
+                <div class="col-12" style="border:1px solid black; padding:20px; min-height:600px;">
+                    
+                    <!-- Header Section -->
+                    <table  class="table table-bordered" style="width:100%; margin-bottom:20px;">
+                        <tr>
+                            <td style="width:70%; text-align:center;">
+                                <h3 t-esc="company.name"/>
+                            </td>
+                            <td style="width:30%; text-align:center;">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:100px;"/>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <!-- Title -->
+                    <h2 style="text-align:center; margin-bottom:20px; text-decoration:underline;">
+                        REPORT CARD
+                    </h2>
+                    
+                    <!-- Student Information -->
+                    <table  class="table table-bordered" style="width:100%; margin-bottom:20px;;">
+                        <tr>
+                            <td width="50%">
+                                <p><strong>Student Name:</strong> <span t-field="doc.student_id.name"/></p>
+                                <p><strong>Roll Number:</strong> <span t-field="doc.roll_number"/></p>
+                                <p><strong>Class:</strong> <span t-field="doc.class_id.name"/></p>
+                            </td>
+                            <td width="50%">
+                                <p><strong>Date:</strong> <span t-field="doc.date"/></p>
+                                <p><strong>Exam:</strong> <span t-field="doc.exam_id.name"/></p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <!-- Subject-wise Results -->
+                    <h4 style="margin-bottom:10px; text-align:center; ">Subject-wise Results</h4>
+                    <table class="table table-bordered" style="width:100%; margin-bottom:20px;">
+                        <thead>
+                            <tr style="background-color:#f8f9fa;">
+                                <th style="text-align:center; padding:8px;">Subject</th>
+                                <th style="text-align:center; padding:8px;">Max Marks</th>
+                                <th style="text-align:center; padding:8px;">Obtained Marks</th>
+                                <th style="text-align:center; padding:8px;">Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.line_ids" t-as="line">
+                                <tr>
+                                    <td style="padding:8px;"><span t-field="line.subject_id.name"/></td>
+                                    <td style="text-align:center; padding:8px;"><span t-field="line.subject_id.max_marks"/></td>
+                                    <td style="text-align:center; padding:8px;"><span t-field="line.obtained_marks"/></td>
+                                    <td style="text-align:center; padding:8px;">
+                                        <t t-set="subject_percentage" 
+                                           t-value="(line.obtained_marks / line.subject_id.max_marks * 100) if line.subject_id.max_marks else 0"/>
+                                        <span t-esc="f'{subject_percentage:.1f} %'"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    
+<!-- Grading Scale & Summary in One Row -->
+<table class="table table-bordered" style="width:100%; margin-bottom:30px;">
+    <tr>
+        <!-- Grading Scale Column -->
+        <td width="50%" style="vertical-align:top; padding-right:15px;">
+            <h4 style="text-align:center;">Grading Scale</h4>
+            <table class="table table-bordered" style="width:100%; margin-bottom:20px;">
+                <tr><td>A+</td><td>90 - 100%</td></tr>
+                <tr><td>A</td><td>80 - 89%</td></tr>
+                <tr><td>B</td><td>70 - 79%</td></tr>
+                <tr><td>C</td><td>60 - 69%</td></tr>
+                <tr><td>D</td><td>50 - 59%</td></tr>
+                <tr><td>F</td><td>Below 50%</td></tr>
+            </table>
+        </td>
+        
+        <!-- Overall Summary Column -->
+        <td width="50%" style="vertical-align:top; padding-left:15px;">
+            <h4 style="text-align:center;">Overall Summary</h4>
+            <table class="table table-bordered" style="width:100%; margin-bottom:10px;">
+                <tr><td>Total Marks</td><td><span t-field="doc.total_marks"/></td></tr>
+                <tr><td>Obtained Marks</td><td><span t-field="doc.obtained_marks"/></td></tr>
+                <tr><td>Percentage</td><td><span t-esc="f'{doc.percentage:.1f} %'"/></td></tr>
+                <tr><td>Grade</td><td><span t-field="doc.grade"/></td></tr>
+            </table>
+
+            <div style="text-align:center; margin-top:10px;">
+                <t t-if="doc.percentage >= 50">
+                    <h3 style="color:green;">RESULT: PASS</h3>
+                </t>
+                <t t-else="">
+                    <h3 style="color:red;">RESULT: FAIL</h3>
+                </t>
+            </div>
+        </td>
+    </tr>
+</table>
+
+                          <tr>
+    <td style="min-height:80vh;"></td>
+  </tr>
+                        
+                    <!-- Signatures -->
+                    <table class="table table-bordered" style="width:100%; margin-top:50px;">
+                        <tr>
+                            <td width="33%" style="text-align:center;">
+                                <div style="border-top:1px solid black; width:150px; margin:0 auto;">
+                                    <p style="margin-top:5px;"><strong>Class Teacher</strong></p>
+                                </div>
+                            </td>
+                            <td width="33%" style="text-align:center;">
+                                <div style="border-top:1px solid black; width:150px; margin:0 auto;">
+                                    <p style="margin-top:5px;"><strong>Principal</strong></p>
+                                </div>
+                            </td>
+                            <td width="33%" style="text-align:center;">
+                                <div style="border-top:1px solid black; width:150px; margin:0 auto;">
+                                    <p style="margin-top:5px;"><strong>Parent Signature</strong></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </t>
+</template>
+    </data>
+
+</odoo>

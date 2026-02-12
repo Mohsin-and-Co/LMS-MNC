@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_lms_support_tree" model="ir.ui.view">
+        <field name="name">lms.support.tree</field>
+        <field name="model">lms.support</field>
+        <field name="arch" type="xml">
+            <list string="Support" create="1">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_lms_support_form" model="ir.ui.view">
+        <field name="name">lms.support.form</field>
+        <field name="model">lms.support</field>
+        <field name="arch" type="xml">
+            <form string="Support">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Support content shown on LMS Support page."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_lms_support" model="ir.actions.act_window">
+        <field name="name">LMS Support</field>
+        <field name="res_model">lms.support</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add support / help entries.</p>
+            <p>These are shown on the LMS portal Support page to students.</p>
+        </field>
+    </record>
+    <menuitem id="menu_lms_support"
+              name="LMS Support"
+              parent="school_manegment_system.menu_school_management_root"
+              action="action_lms_support"
+              sequence="47"/>
+</odoo>

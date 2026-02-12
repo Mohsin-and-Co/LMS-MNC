@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Attendance list View -->
+        <record id="view_attendance_list" model="ir.ui.view">
+            <field name="name">school.attendance.list</field>
+            <field name="model">school.attendance</field>
+            <field name="arch" type="xml">
+                <list string="Attendance"
+                      decoration-info="state == 'draft'"
+                      decoration-success="state == 'confirmed'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="student_id"/>
+                    <field name="status"/>
+                    <field name="remark"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Attendance Form View -->
+        <record id="view_attendance_form" model="ir.ui.view">
+            <field name="name">school.attendance.form</field>
+            <field name="model">school.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Attendance">
+                    <header>
+                        <button name="action_confirm"
+                                string="Confirm"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="draft,confirmed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Attendance Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="student_id"/>
+                            </group>
+                            <group>
+                                <field name="status"/>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Attendance Action -->
+        <record id="action_attendance" model="ir.actions.act_window">
+            <field name="name">Attendance</field>
+            <field name="res_model">school.attendance</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first attendance record!
+                </p>
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_attendance_root"
+                  name="Attendance"
+                  parent="menu_school_management_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_attendance"
+                  name="Attendance"
+                  parent="menu_attendance_root"
+                  action="action_attendance"
+                  sequence="10"/>
+
+
+
+    </data>
+</odoo>

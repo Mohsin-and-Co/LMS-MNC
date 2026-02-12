@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Result WhatsApp Wizard Form View -->
+        <record id="view_result_whatsapp_wizard_form" model="ir.ui.view">
+            <field name="name">school.result.whatsapp.wizard.form</field>
+            <field name="model">school.result.whatsapp.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Send Result via WhatsApp">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="class_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="exam_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_send_whatsapp" string="Send WhatsApp Messages" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Result WhatsApp Wizard Action -->
+        <record id="action_result_whatsapp_wizard" model="ir.actions.act_window">
+            <field name="name">Send Result via WhatsApp</field>
+            <field name="res_model">school.result.whatsapp.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

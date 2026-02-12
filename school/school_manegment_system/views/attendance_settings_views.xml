@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Attendance Settings Form View -->
+        <record id="view_attendance_settings_form" model="ir.ui.view">
+            <field name="name">school.attendance.settings.form</field>
+            <field name="model">school.attendance.settings</field>
+            <field name="arch" type="xml">
+                <form string="Attendance Settings">
+                    <sheet>
+                        <group>
+                            <group string="WhatsApp Message Settings">
+                                <field name="attendance_auto_send_enable"/>
+                                <field name="attendance_staff_message_enable"/>
+                                <field name="attendance_classwise_message_enable"/>
+                            </group>
+                            <group string="Staff Attendance Settings">
+                                <field name="staff_attendance_group_phone" 
+                                       invisible="not attendance_staff_message_enable"
+                                       placeholder="e.g., +923001234567"
+                                       help="Group phone number for staff attendance messages (one-by-one messages will be sent)"/>
+                            </group>
+                            <group string="Student Attendance to Teacher">
+                                <field name="student_attendance_teacher_enable"/>
+                                <field name="student_attendance_teacher_time" 
+                                       invisible="not student_attendance_teacher_enable"
+                                       widget="float_time"
+                                       help="Time when teacher receives student attendance messages (e.g., 9:00 AM)"/>
+                            </group>
+                            <group string="Student Attendance Classwise Settings">
+                                <field name="student_attendance_classwise_enable"/>
+                                <field name="attendance_classwise_message_enable" 
+                                       invisible="not student_attendance_classwise_enable"/>
+                            </group>
+                            <group string="Attendance Time Settings">
+                                <field name="attendance_start_time" widget="float_time"
+                                       help="Start time for attendance (e.g., 8:00 AM)"/>
+                                <field name="attendance_end_time" widget="float_time"
+                                       help="End time for attendance (e.g., 5:00 PM)"/>
+                            </group>
+                            <group string="Auto-send Absent/Leave Messages">
+                                <field name="auto_send_absent_leave_enable"/>
+                            </group>
+                            <group string="Classwise Summary Settings">
+                                <field name="classwise_summary_enable"/>
+                                <field name="class_teacher_id" 
+                                       options="{'no_create': True, 'no_create_edit': True}"
+                                       invisible="not classwise_summary_enable"/>
+                                <field name="summary_send_time" 
+                                       invisible="not classwise_summary_enable"
+                                       widget="float_time"/>
+                            </group>
+                            <group string="Timezone Settings">
+                                <field name="timezone"/>
+                            </group>
+                        </group>
+                        <div class="alert alert-info" role="alert" invisible="not classwise_summary_enable">
+                            <p><strong>Note:</strong> Classwise summary will be sent daily at the specified time to the selected class teacher.</p>
+                            <p>Time format: 24-hour (e.g., 17.5 for 5:30 PM, 14.0 for 2:00 PM)</p>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button string="Save" type="object" name="set_values" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Attendance Settings Action -->
+        <record id="action_attendance_settings" model="ir.actions.act_window">
+            <field name="name">Attendance Settings</field>
+            <field name="res_model">school.attendance.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_attendance_settings"
+                  name="Attendance Settings"
+                  parent="menu_school_settings_root"
+                  action="action_attendance_settings"
+                  sequence="45"/>
+
+    </data>
+</odoo>

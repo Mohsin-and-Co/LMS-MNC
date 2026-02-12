@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Student Card Report -->
+        <record id="action_report_student_card" model="ir.actions.report">
+            <field name="name">Student ID Card</field>
+            <field name="model">school.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_manegment_system.report_student_card_template</field>
+            <field name="report_file">school_manegment_system.report_student_card_template</field>
+            <field name="binding_model_id" ref="model_school_student"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">'Student_Card_%s' % (object.name or object.roll_number or 'N/A')</field>
+            <field name="paperformat_id" ref="base.paperformat_us"/>
+        </record>
+
+        <!-- Student Card Template -->
+        <template id="report_student_card_template">
+            <t t-call="web.html_container">
+                <t t-set="company" t-value="env.company"/>
+                <t t-foreach="docs" t-as="student">
+                    <div class="page" style="width: 85mm; height: 54mm; border: 2px solid #333; margin: 10mm auto; padding: 5mm; font-family: Arial, sans-serif; position: relative;">
+                        <!-- Header with Company Logo and Name -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 3mm; margin-bottom: 3mm;">
+                            <!-- Company Name (Left Side) -->
+                            <div style="flex: 1; text-align: left;">
+                                <h3 style="margin: 0; font-size: 12pt; color: #1a5490; font-weight: bold;"><t t-esc="company.name or 'School Name'"/></h3>
+                            </div>
+                            <!-- Company Logo (Right Side) -->
+                            <div style="flex: 0 0 auto; text-align: right;">
+                                <img t-attf-src="data:image/png;base64,{{company.logo or ''}}" 
+                                     style="max-width: 20mm; max-height: 15mm; height: auto;" 
+                                     alt="Logo" t-if="company.logo"/>
+                            </div>
+                        </div>
+                        <!-- Card Type -->
+                        <div style="text-align: center; margin-bottom: 2mm;">
+                            <h2 style="margin: 0; font-size: 11pt; color: #1a5490;">STUDENT ID CARD</h2>
+                            <p style="margin: 0; font-size: 8pt; color: #666;"><t t-esc="student.class_id.name or 'N/A'"/></p>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div style="display: flex; align-items: center;">
+                            <!-- Photo and QR Code -->
+                            <div style="width: 30%; text-align: center; margin-right: 3mm;">
+                                <div style="border: 1px solid #ddd; padding: 2mm; margin-bottom: 2mm;">
+                                    <img t-attf-src="data:image/png;base64,{{student.photo or ''}}" 
+                                         style="width: 100%; max-width: 25mm; height: auto;" 
+                                         alt="Photo" t-if="student.photo"/>
+                                    <div style="font-size: 7pt; color: #999;" t-if="not student.photo">No Photo</div>
+                                </div>
+                                <div style="border: 1px solid #ddd; padding: 1mm;">
+                                    <img t-attf-src="data:image/png;base64,{{student.qr_code_image or ''}}" 
+                                         style="width: 100%; max-width: 20mm; height: auto;" 
+                                         alt="QR Code" t-if="student.qr_code_image"/>
+                                    <div style="font-size: 6pt; color: #999;" t-if="not student.qr_code_image">QR Code</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Details - Only Essential Fields -->
+                            <div style="width: 70%; font-size: 9pt;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding: 1mm 0; font-weight: bold; width: 35%;">Name:</td>
+                                        <td style="padding: 1mm 0;"><t t-esc="student.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1mm 0; font-weight: bold;">Roll No:</td>
+                                        <td style="padding: 1mm 0;"><t t-esc="student.roll_number or 'N/A'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1mm 0; font-weight: bold;">Class:</td>
+                                        <td style="padding: 1mm 0;"><t t-esc="student.class_id.name or 'N/A'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1mm 0; font-weight: bold;">Admission:</td>
+                                        <td style="padding: 1mm 0; font-size: 8pt;"><t t-esc="student.admission_number or 'N/A'"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div style="position: absolute; bottom: 2mm; left: 5mm; right: 5mm; border-top: 1px solid #ddd; padding-top: 2mm; font-size: 7pt; text-align: center;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>ID: <t t-esc="student.admission_number or student.roll_number or 'N/A'"/></span>
+                                <span><t t-esc="student.class_id.name or ''"/></span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!-- Staff Card Report -->
+        <record id="action_report_staff_card" model="ir.actions.report">
+            <field name="name">Staff ID Card</field>
+            <field name="model">school.teacher</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_manegment_system.report_staff_card_template</field>
+            <field name="report_file">school_manegment_system.report_staff_card_template</field>
+            <field name="binding_model_id" ref="model_school_teacher"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">'Staff_Card_%s' % (object.name or object.employee_id or 'N/A')</field>
+            <field name="paperformat_id" ref="base.paperformat_us"/>
+        </record>
+
+        <!-- Staff Card Template -->
+        <template id="report_staff_card_template">
+            <t t-call="web.html_container">
+                <t t-set="company" t-value="env.company"/>
+                <t t-foreach="docs" t-as="staff">
+                    <div class="page" style="width: 85mm; height: 54mm; border: 2px solid #333; margin: 10mm auto; padding: 5mm; font-family: Arial, sans-serif; position: relative;">
+                        <!-- Header with Company Logo and Name -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 3mm; margin-bottom: 3mm;">
+                            <!-- Company Name (Left Side) -->
+                            <div style="flex: 1; text-align: left;">
+                                <h3 style="margin: 0; font-size: 12pt; color: #1a5490; font-weight: bold;"><t t-esc="company.name or 'School Name'"/></h3>
+                            </div>
+                            <!-- Company Logo (Right Side) -->
+                            <div style="flex: 0 0 auto; text-align: right;">
+                                <img t-attf-src="data:image/png;base64,{{company.logo or ''}}" 
+                                     style="max-width: 20mm; max-height: 15mm; height: auto;" 
+                                     alt="Logo" t-if="company.logo"/>
+                            </div>
+                        </div>
+                        <!-- Card Type -->
+                        <div style="text-align: center; margin-bottom: 2mm;">
+                            <h2 style="margin: 0; font-size: 11pt; color: #1a5490;">STAFF ID CARD</h2>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div style="display: flex; align-items: center;">
+                            <!-- Photo and QR Code -->
+                            <div style="width: 30%; text-align: center; margin-right: 3mm;">
+                                <div style="border: 1px solid #ddd; padding: 2mm; margin-bottom: 2mm;">
+                                    <img t-attf-src="data:image/png;base64,{{staff.photo or ''}}" 
+                                         style="width: 100%; max-width: 25mm; height: auto;" 
+                                         alt="Photo" t-if="staff.photo"/>
+                                    <div style="font-size: 7pt; color: #999;" t-if="not staff.photo">No Photo</div>
+                                </div>
+                                <div style="border: 1px solid #ddd; padding: 1mm;">
+                                    <img t-attf-src="data:image/png;base64,{{staff.qr_code_image or ''}}" 
+                                         style="width: 100%; max-width: 20mm; height: auto;" 
+                                         alt="QR Code" t-if="staff.qr_code_image"/>
+                                    <div style="font-size: 6pt; color: #999;" t-if="not staff.qr_code_image">QR Code</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Details -->
+                            <div style="width: 70%; font-size: 9pt;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding: 1mm 0; font-weight: bold; width: 35%;">Name:</td>
+                                        <td style="padding: 1mm 0;"><t t-esc="staff.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1mm 0; font-weight: bold;">Employee ID:</td>
+                                        <td style="padding: 1mm 0;"><t t-esc="staff.employee_id or 'N/A'"/></td>
+                                    </tr>
+                                    <tr t-if="staff.phone">
+                                        <td style="padding: 1mm 0; font-weight: bold;">Phone:</td>
+                                        <td style="padding: 1mm 0;"><t t-esc="staff.phone"/></td>
+                                    </tr>
+                                    <tr t-if="staff.email">
+                                        <td style="padding: 1mm 0; font-weight: bold;">Email:</td>
+                                        <td style="padding: 1mm 0; font-size: 8pt;"><t t-esc="staff.email"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div style="position: absolute; bottom: 2mm; left: 5mm; right: 5mm; border-top: 1px solid #ddd; padding-top: 2mm; font-size: 7pt; text-align: center;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>ID: <t t-esc="staff.employee_id or 'N/A'"/></span>
+                                <span>Staff</span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

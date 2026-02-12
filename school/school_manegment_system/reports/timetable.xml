@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Report Action -->
+        <record id="action_report_class_timetable" model="ir.actions.report">
+        <field name="name">Class Timetable</field>
+        <field name="model">school.class</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_manegment_system.report_class_timetable_template</field>
+        <field name="report_file">school_manegment_system.report_class_timetable_template</field>
+        <field name="binding_model_id" ref="model_school_class"/>
+        <field name="binding_type">report</field>
+            <field name="print_report_name">'Class_Timetable_%s' % (object.name)</field>
+        </record>
+
+        <!-- Report Template (grouped by time range; safe filtering) -->
+        <template id="report_class_timetable_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="class_rec">
+                <div class="page">
+                    <h2 style="text-align:center;">Class Timetable - <t t-esc="class_rec.name"/></h2>
+
+                    <table width="100%" style="margin-bottom: 10px; border-collapse: collapse; border: 1px solid black; text-align:center;">
+                        <thead>
+                            <tr style="background-color:#e0e0e0; border: 1px solid black;">
+                                <th style="border: 1px solid black; padding: 5px;">Time From</th>
+                                <th style="border: 1px solid black; padding: 5px;">Time To</th>
+                                <th style="border: 1px solid black; padding: 5px;">Monday</th>
+                                <th style="border: 1px solid black; padding: 5px;">Tuesday</th>
+                                <th style="border: 1px solid black; padding: 5px;">Wednesday</th>
+                                <th style="border: 1px solid black; padding: 5px;">Thursday</th>
+                                <th style="border: 1px solid black; padding: 5px;">Friday</th>
+                                <th style="border: 1px solid black; padding: 5px;">Saturday</th>
+                                <th style="border: 1px solid black; padding: 5px;">Sunday</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Build unique time ranges safely and sort them -->
+                            <t t-set="time_pairs_step1" t-value="[(s.start_time, s.end_time) for s in class_rec.timetable_ids]"/>
+                            <t t-set="time_keys" t-value="sorted(list(set(time_pairs_step1)))"/>
+
+                            <!-- Day order -->
+                            <t t-set="days" t-value="['monday','tuesday','wednesday','thursday','friday','saturday','sunday']"/>
+
+                            <!-- One row per (start_time, end_time) -->
+                            <t t-foreach="time_keys" t-as="tk">
+                                <tr>
+                                    <t t-set="start_hour" t-value="int(tk[0])"/>
+                                    <t t-set="start_min" t-value="int((tk[0] - start_hour) * 60)"/>
+                                   <t t-set="start_period" t-value="'AM' if start_hour &lt; 12 else 'PM'"/>
+                                    <t t-set="start_display_hour" t-value="12 if start_hour == 0 else (start_hour - 12 if start_hour > 12 else start_hour)"/>
+                                    <t t-set="end_hour" t-value="int(tk[1])"/>
+                                    <t t-set="end_min" t-value="int((tk[1] - end_hour) * 60)"/>
+                                    <t t-set="end_period" t-value="'AM' if end_hour &lt;  12 else 'PM'"/>
+                                    <t t-set="end_display_hour" t-value="12 if end_hour == 0 else (end_hour - 12 if end_hour > 12 else end_hour)"/>
+                                    <td style="border: 1px solid black; padding: 5px;"><t t-esc="'%d:%02d %s' % (start_display_hour, start_min, start_period)"/></td>
+                                    <td style="border: 1px solid black; padding: 5px;"><t t-esc="'%d:%02d %s' % (end_display_hour, end_min, end_period)"/></td>
+
+                                    <!-- Seven day cells -->
+                                    <t t-foreach="days" t-as="day">
+                                        <td style="border: 1px solid black; padding: 5px;">
+                                            <!-- Find the matching slot using recordset.filtered -->
+                                            <t t-set="slot_rs"
+                                               t-value="class_rec.timetable_ids.filtered(lambda s: s.start_time == tk[0] and s.end_time == tk[1] and s.day_of_week == day)"/>
+                                            <t t-if="slot_rs">
+                                                <t t-esc="slot_rs[0].subject_id.name"/> | <t t-esc="slot_rs[0].teacher_id.name"/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+        </template>
+    </data>
+</odoo>

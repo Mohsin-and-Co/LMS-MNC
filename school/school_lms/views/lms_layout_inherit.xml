@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Hide main website header when on LMS so LMS menu is separate -->
+    <template id="lms_standalone_style" inherit_id="website.layout" name="LMS standalone style">
+        <xpath expr="//head" position="inside">
+            <style>
+                html.o_lms_standalone .o_header,
+                html.o_lms_standalone #top,
+                html.o_lms_standalone header.navbar,
+                html.o_lms_standalone .o_main_navbar,
+                body.o_lms_standalone .o_header,
+                body.o_lms_standalone #top,
+                body.o_lms_standalone header.navbar,
+                body.o_lms_standalone .o_main_navbar { display: none !important; }
+
+                /* LMS sidebar fixed – does not move on scroll */
+                body.o_lms_standalone .lms-sidebar {
+                    position: fixed !important;
+                    left: 0;
+                    top: 56px;
+                    width: 220px;
+                    height: calc(100vh - 56px);
+                    overflow-y: auto;
+                    z-index: 100;
+                    flex-shrink: 0;
+                }
+                body.o_lms_standalone .lms-main-content {
+                    margin-left: 220px;
+                    min-height: calc(100vh - 56px);
+                }
+            </style>
+            <script type="text/javascript">
+                (function() {
+                    if (window.location.pathname.indexOf('/school/lms') === 0) {
+                        document.documentElement.classList.add('o_lms_standalone');
+                        if (document.body) document.body.classList.add('o_lms_standalone');
+                        else document.addEventListener('DOMContentLoaded', function() { document.body.classList.add('o_lms_standalone'); });
+                    }
+                })();
+            </script>
+        </xpath>
+    </template>
+</odoo>

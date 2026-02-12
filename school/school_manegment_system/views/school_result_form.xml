@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form View -->
+        <record id="view_school_result_form" model="ir.ui.view">
+            <field name="name">school.result.form</field>
+            <field name="model">school.result</field>
+            <field name="arch" type="xml">
+                <form string="School Result">
+                    <sheet>
+                        <!-- Print Button Section (Inside Sheet) -->
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_send_result_whatsapp"
+                                    string="Send via WhatsApp"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-whatsapp"
+                                    invisible="id == False"/>
+                        </div>
+
+                        <group>
+                            <field name="roll_number"/>
+                            <field name="student_id" readonly="1"/>
+                            <field name="class_id" readonly="1"/>
+                            <field name="date"/>
+                            <field name="total_marks"/>
+                            <field name="exam_id"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Subjects">
+                                <field name="line_ids">
+                                    <list editable="bottom">
+                                        <field name="subject_id"/>
+                                        <field name="obtained_marks"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="Summary">
+                                <group>
+                                    <field name="total_marks" readonly="1"/>
+                                    <field name="obtained_marks" readonly="1"/>
+                                    <field name="percentage" readonly="1"/>
+                                    <field name="grade" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- list View -->
+        <record id="view_school_result_list" model="ir.ui.view">
+            <field name="name">school.result.list</field>
+            <field name="model">school.result</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="roll_number"/>
+                    <field name="exam_id"/>
+                    <field name="student_id"/>
+                    <field name="class_id"/>
+                    <field name="total_marks"/>
+                    <field name="obtained_marks"/>
+                    <field name="percentage"/>
+                    <field name="grade"/>
+                    <field name="date"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_school_result" model="ir.actions.act_window">
+            <field name="name">Student Results</field>
+            <field name="res_model">school.result</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new student result.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_settings_result" name="Result" parent="menu_school_settings_root" action="action_school_result" sequence="60"/>
+
+    </data>
+</odoo>

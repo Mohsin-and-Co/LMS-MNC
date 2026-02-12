@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Staff Attendance list View -->
+        <record id="view_staff_attendance_list" model="ir.ui.view">
+            <field name="name">school.staff.attendance.list</field>
+            <field name="model">school.staff.attendance</field>
+            <field name="arch" type="xml">
+                <list string="Staff Attendance" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="staff_id"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="status"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Staff Attendance Form View -->
+        <record id="view_staff_attendance_form" model="ir.ui.view">
+            <field name="name">school.staff.attendance.form</field>
+            <field name="model">school.staff.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Staff Attendance">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Attendance Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="staff_id"/>
+                            </group>
+                            <group>
+                                <field name="check_in"/>
+                                <field name="check_out"/>
+                                <field name="status"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remark" placeholder="Remarks..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Staff Attendance Action -->
+        <record id="action_staff_attendance" model="ir.actions.act_window">
+            <field name="name">Staff Attendance</field>
+            <field name="res_model">school.staff.attendance</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first staff attendance record!
+                </p>
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_staff_attendance" name="Staff Attendance" parent="menu_attendance_root" action="action_staff_attendance" sequence="20"/>
+
+    </data>
+</odoo>
