@@ -5,8 +5,8 @@
             <field name="name">School Fee Report</field>
             <field name="model">school.fee</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">school_manegment_system.report_school_fee_document</field>
-            <field name="report_file">school_manegment_system.report_school_fee_document</field>
+            <field name="report_name">education_school_management.report_school_fee_document</field>
+            <field name="report_file">education_school_management.report_school_fee_document</field>
             <field name="print_report_name">'School_fee_%s' % (object.name)</field>
         </record>
 

@@ -6,8 +6,8 @@
             <field name="name">Book Issue Receipt</field>
             <field name="model">library.book.issue</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">school_manegment_system.report_library_issue_template</field>
-            <field name="report_file">school_manegment_system.report_library_issue_template</field>
+            <field name="report_name">education_school_management.report_library_issue_template</field>
+            <field name="report_file">education_school_management.report_library_issue_template</field>
             <field name="binding_model_id" ref="model_library_book_issue"/>
             <field name="binding_type">report</field>
             <field name="print_report_name">'Book_Issue_%s' % (object.name)</field>

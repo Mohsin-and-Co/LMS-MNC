@@ -42,7 +42,7 @@
     </record>
     <menuitem id="menu_lms_support"
               name="LMS Support"
-              parent="school_manegment_system.menu_school_management_root"
+              parent="education_school_management.menu_school_management_root"
               action="action_lms_support"
               sequence="47"/>
 </odoo>

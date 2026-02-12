@@ -317,7 +317,7 @@ class Student(models.Model):
     
     def action_print_id_card(self):
         """Print Student ID Card"""
-        return self.env.ref('school_manegment_system.action_report_student_card').report_action(self)
+        return self.env.ref('education_school_management.action_report_student_card').report_action(self)
     
     # QR Code Methods
     @api.depends('admission_number')

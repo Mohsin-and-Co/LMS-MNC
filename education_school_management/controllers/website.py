@@ -26,7 +26,7 @@ class SchoolWebsite(http.Controller):
             classes = request.env['school.class'].sudo().search([])
             _logger.info("Found %d classes for enrollment form", len(classes))
             message = request.session.pop('enrollment_success', None)
-            return request.render('school_manegment_system.student_enrollment_form', {
+            return request.render('education_school_management.student_enrollment_form', {
                 'classes': classes,
                 'message': message
             })
@@ -96,7 +96,7 @@ class SchoolWebsite(http.Controller):
                 request.session['enrollment_success'] = success_message
                 _logger.info("Enrollment success: %s", success_message)
                 
-                return request.render('school_manegment_system.enrollment_success', {
+                return request.render('education_school_management.enrollment_success', {
                     'message': success_message
                 })
 
@@ -117,7 +117,7 @@ class SchoolWebsite(http.Controller):
     @http.route(['/school/enrollment/success'], type='http', auth='public', website=True)
     def enrollment_success(self, **kw):
         message = request.session.get('enrollment_success', 'Enrollment completed successfully!')
-        return request.render('school_manegment_system.enrollment_success', {
+        return request.render('education_school_management.enrollment_success', {
             'message': message
         })
 
@@ -125,7 +125,7 @@ class SchoolWebsite(http.Controller):
     @http.route(['/school/scan'], type='http', auth='public', website=True, methods=['GET'])
     def school_scan_page(self, **kw):
         """Public page to scan QR for attendance - waha se scan hona chahiye."""
-        return request.render('school_manegment_system.school_scan_page')
+        return request.render('education_school_management.school_scan_page')
 
     @http.route(['/school/scan/submit'], type='http', auth='public', methods=['POST'], csrf=False)
     def school_scan_submit(self, **post):
@@ -294,7 +294,7 @@ class SchoolWebsite(http.Controller):
         
         _logger.info(f"Found {len(results)} results for {len(students)} students")
         
-        return request.render('school_manegment_system.portal_my_results', {
+        return request.render('education_school_management.portal_my_results', {
             'results': results,
             'students': students,
             'user_email': email,

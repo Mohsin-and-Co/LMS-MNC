@@ -197,5 +197,5 @@ class SchoolTeacher(models.Model):
 
     def action_print_id_card(self):
         return self.env.ref(
-            'school_manegment_system.action_report_staff_card'
+            'education_school_management.action_report_staff_card'
         ).report_action(self)

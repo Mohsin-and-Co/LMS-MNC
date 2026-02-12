@@ -172,7 +172,7 @@
 
         <!-- Homepage -->
         <template id="school_homepage" name="School Homepage">
-            <t t-call="school_manegment_system.school_layout">
+            <t t-call="education_school_management.school_layout">
                 <!-- Hero Section -->
                 <div class="hero-section">
                     <div style="max-width: 1200px; margin: 0 auto;">
@@ -280,7 +280,7 @@
 
         <!-- Student Enrollment Form -->
         <template id="student_enrollment_form" name="Student Enrollment">
-            <t t-call="school_manegment_system.school_layout">
+            <t t-call="education_school_management.school_layout">
                 <div class="container py-5">
                     <!-- Success Message -->
                     <div t-if="message" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -382,7 +382,7 @@
 
         <!-- Enrollment Success Template -->
         <template id="enrollment_success" name="Enrollment Success">
-            <t t-call="school_manegment_system.school_layout">
+            <t t-call="education_school_management.school_layout">
                 <div class="container py-5 text-center">
                     <div class="alert alert-success">
                         <h2>
@@ -400,7 +400,7 @@
 
         <!-- Class Management Form -->
         <template id="class_management_form" name="Class Management">
-            <t t-call="school_manegment_system.school_layout">
+            <t t-call="education_school_management.school_layout">
                 <div class="container py-5">
                     <!-- Success Message -->
                     <div t-if="message" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -499,7 +499,7 @@
 
         <!-- Class Added Success Template -->
         <template id="class_added_success" name="Class Added Successfully">
-            <t t-call="school_manegment_system.school_layout">
+            <t t-call="education_school_management.school_layout">
                 <div class="container py-5 text-center">
                     <div class="alert alert-success">
                         <h2>
@@ -517,7 +517,7 @@
 
         <!-- /school/scan - Public QR scan page -->
         <template id="school_scan_page" name="Scan Attendance - School">
-            <t t-call="school_manegment_system.school_layout">
+            <t t-call="education_school_management.school_layout">
                 <div style="max-width: 800px; margin: 100px auto 60px; padding: 20px;">
                     <h1 style="color: #1a4f7c; margin-bottom: 10px;">
                         <i class="fa fa-qrcode"/> QR Attendance Scan

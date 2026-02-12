@@ -5,12 +5,12 @@
             <field name="name">Student Report</field>
             <field name="model">school.student</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">school_manegment_system.student_report</field>
-            <field name="report_file">school_manegment_system.student_report</field>
+            <field name="report_name">education_school_management.student_report</field>
+            <field name="report_file">education_school_management.student_report</field>
                <field name="attachment"/>
             <field name="binding_model_id" ref="model_school_student"/>
             <field name="binding_type">report</field>
-<!--                 <field name="paperformat_id" ref="school_manegment_system.paperformat_student"/>-->
+<!--                 <field name="paperformat_id" ref="education_school_management.paperformat_student"/>-->
 
         </record>
      <record id="paperformat_student" model="report.paperformat">

@@ -132,7 +132,7 @@ class Fee(models.Model):
         """ Trigger PDF Fee Report """
         try:
             return self.env.ref(
-                'school_manegment_system.action_report_school_fee'
+                'education_school_management.action_report_school_fee'
             ).report_action(self)
         except ValueError:
             raise UserError(_("The Fee Report template is missing. Please check if 'action_report_school_fee' is defined in XML."))

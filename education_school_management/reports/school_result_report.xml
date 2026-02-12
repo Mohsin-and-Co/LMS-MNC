@@ -21,10 +21,10 @@
         <field name="name">School Result Report</field>
         <field name="model">school.result</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">school_manegment_system.report_school_result_template</field>
-        <field name="report_file">school_manegment_system.report_school_result_template</field>
+        <field name="report_name">education_school_management.report_school_result_template</field>
+        <field name="report_file">education_school_management.report_school_result_template</field>
         <field name="print_report_name">'School_Result_%s' % (object.student_id.name)</field>
-        <field name="paperformat_id" ref="school_manegment_system.paperformat_result"/>
+        <field name="paperformat_id" ref="education_school_management.paperformat_result"/>
         <field name="binding_model_id" ref="model_school_result"/>
         <field name="binding_type">report</field>
     </record>

@@ -53,5 +53,5 @@ class SchoolClass(models.Model):
 
     def action_print_timetable(self):
         """Print the timetable report as PDF"""
-        return self.env.ref('school_manegment_system.action_report_class_timetable').report_action(self)
+        return self.env.ref('education_school_management.action_report_class_timetable').report_action(self)
    

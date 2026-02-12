@@ -117,13 +117,13 @@ class SchoolResult(models.Model):
 
     def action_print_result(self):
         """Print the result report as PDF"""
-        return self.env.ref('school_manegment_system.report_school_result').report_action(self)
+        return self.env.ref('education_school_management.report_school_result').report_action(self)
     
     def action_print_result_preview(self):
         """Preview the result report in browser (HTML)"""
         return {
             'type': 'ir.actions.report',
-            'report_name': 'school_manegment_system.report_school_result_template',
+            'report_name': 'education_school_management.report_school_result_template',
             'report_type': 'qweb-html',
             'data': {'ids': self.ids},
             'context': dict(self.env.context),

@@ -6,8 +6,8 @@
             <field name="name">Student ID Card</field>
             <field name="model">school.student</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">school_manegment_system.report_student_card_template</field>
-            <field name="report_file">school_manegment_system.report_student_card_template</field>
+            <field name="report_name">education_school_management.report_student_card_template</field>
+            <field name="report_file">education_school_management.report_student_card_template</field>
             <field name="binding_model_id" ref="model_school_student"/>
             <field name="binding_type">report</field>
             <field name="print_report_name">'Student_Card_%s' % (object.name or object.roll_number or 'N/A')</field>
@@ -97,8 +97,8 @@
             <field name="name">Staff ID Card</field>
             <field name="model">school.teacher</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">school_manegment_system.report_staff_card_template</field>
-            <field name="report_file">school_manegment_system.report_staff_card_template</field>
+            <field name="report_name">education_school_management.report_staff_card_template</field>
+            <field name="report_file">education_school_management.report_staff_card_template</field>
             <field name="binding_model_id" ref="model_school_teacher"/>
             <field name="binding_type">report</field>
             <field name="print_report_name">'Staff_Card_%s' % (object.name or object.employee_id or 'N/A')</field>

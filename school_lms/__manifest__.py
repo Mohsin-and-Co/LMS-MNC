@@ -15,7 +15,7 @@ Student LMS for Odoo 19
     """,
     'author': 'Abdul Wahid ',
     'website': '',
-    'depends': ['school_manegment_system', 'website'],
+    'depends': ['education_school_management', 'website'],
     'data': [
         'security/ir.model.access.csv',
         'views/lms_subject_material_views.xml',

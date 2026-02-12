@@ -147,7 +147,7 @@ class SchoolSalary(models.Model):
     def action_print_salary(self):
         try:
             return self.env.ref(
-                'school_manegment_system.action_report_school_salary'
+                'education_school_management.action_report_school_salary'
             ).report_action(self)
         except ValueError:
             raise UserError(_("Salary Report template missing. Check XML definition."))

@@ -44,7 +44,7 @@
     </record>
     <menuitem id="menu_lms_subject_notification"
               name="Subject Notifications"
-              parent="school_manegment_system.menu_school_management_root"
+              parent="education_school_management.menu_school_management_root"
               action="action_lms_subject_notification"
               sequence="48"/>
 </odoo>

@@ -48,7 +48,7 @@
     </record>
     <menuitem id="menu_lms_student_document"
               name="Student Documents"
-              parent="school_manegment_system.menu_school_management_root"
+              parent="education_school_management.menu_school_management_root"
               action="action_lms_student_document"
               sequence="46"/>
 </odoo>
