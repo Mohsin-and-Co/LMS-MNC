@@ -24,6 +24,8 @@ Features:
     'website': 'https://pk.linkedin.com/company/ebitda-solutions',
     'license': 'LGPL-3',
     'maintainers': ['EBITDASOL'],
+    'price': 38.59,
+    'currency': 'USD',
     'depends': [
         'base',
         'mail',
