@@ -96,8 +96,7 @@
         </record>
 
         <menuitem id="menu_student_admission_root"
-                  name="Student Admissions"
-                  parent="education_school_management.menu_school_management_root"
+                  name="Student Admission &amp; Invoicing"
                   sequence="22"/>
         <menuitem id="menu_student_admission"
                   name="Admissions"
