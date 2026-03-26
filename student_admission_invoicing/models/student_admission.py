@@ -89,6 +89,17 @@ class StudentAdmission(models.Model):
         readonly=True,
         copy=False,
     )
+    sale_order_id = fields.Many2one(
+        "sale.order",
+        string="Quotation",
+        readonly=True,
+        copy=False,
+    )
+    sale_order_state = fields.Selection(
+        related="sale_order_id.state",
+        string="Quotation State",
+        readonly=True,
+    )
     invoice_state = fields.Selection(
         related="invoice_id.state",
         string="Invoice State",
@@ -284,6 +295,79 @@ class StudentAdmission(models.Model):
             "res_model": "account.move",
             "view_mode": "form",
             "res_id": self.invoice_id.id,
+            "target": "current",
+        }
+
+    def action_create_quote(self):
+        self.ensure_one()
+        if not self.partner_id:
+            self._ensure_partner()
+        if not self.service_product_id:
+            raise UserError(_("Please select a service product to create quote."))
+
+        if self.sale_order_id:
+            return {
+                "name": _("Quotation"),
+                "type": "ir.actions.act_window",
+                "res_model": "sale.order",
+                "view_mode": "form",
+                "res_id": self.sale_order_id.id,
+                "target": "current",
+            }
+
+        line_vals = {
+            "product_id": self.service_product_id.id,
+            "name": self.service_product_id.display_name,
+            "product_uom_qty": 1.0,
+            "price_unit": self.fee_amount,
+            "discount": self.discount_value if self.discount_type == "percent" else 0.0,
+        }
+
+        order_vals = {
+            "partner_id": self.partner_id.id,
+            "origin": self.name,
+            "order_line": [(0, 0, line_vals)],
+        }
+        sale_order = self.env["sale.order"].create(order_vals)
+
+        if self.discount_type == "fixed" and self.discount_amount:
+            sale_order.write(
+                {
+                    "order_line": [
+                        (
+                            0,
+                            0,
+                            {
+                                "product_id": self.service_product_id.id,
+                                "name": _("Discount"),
+                                "product_uom_qty": 1.0,
+                                "price_unit": -abs(self.discount_amount),
+                            },
+                        )
+                    ]
+                }
+            )
+
+        self.sale_order_id = sale_order.id
+        return {
+            "name": _("Quotation"),
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "view_mode": "form",
+            "res_id": sale_order.id,
+            "target": "current",
+        }
+
+    def action_view_quote(self):
+        self.ensure_one()
+        if not self.sale_order_id:
+            raise UserError(_("No quotation linked to this admission."))
+        return {
+            "name": _("Quotation"),
+            "type": "ir.actions.act_window",
+            "res_model": "sale.order",
+            "view_mode": "form",
+            "res_id": self.sale_order_id.id,
             "target": "current",
         }
 

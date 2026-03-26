@@ -10,6 +10,7 @@
         "mail",
         "product",
         "account",
+        "sale",
         "education_school_management",
     ],
     "data": [
