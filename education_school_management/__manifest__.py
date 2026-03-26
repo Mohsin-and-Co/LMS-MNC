@@ -24,8 +24,6 @@ Features:
     'website': 'https://ebitdasolutions.com',
     'license': 'LGPL-3',
     'maintainers': ['EBITDA SOLUTIONS LLP'],
-    'price': 38.59,
-    'currency': 'USD',
     'depends': [
         'base',
         'mail',
