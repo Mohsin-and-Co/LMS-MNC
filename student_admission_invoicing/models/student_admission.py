@@ -205,6 +205,7 @@ class StudentAdmission(models.Model):
             "name": self.service_product_id.display_name,
             "quantity": 1.0,
             "price_unit": self.fee_amount,
+            "discount": 0.0,
         }
         if self.discount_type == "percent":
             line_vals["discount"] = self.discount_value
@@ -231,6 +232,7 @@ class StudentAdmission(models.Model):
 
         if self.discount_type == "fixed" and self.discount_amount:
             discount_line_vals = {
+                "product_id": self.service_product_id.id,
                 "name": _("Discount"),
                 "quantity": 1.0,
                 "price_unit": -abs(self.discount_amount),
@@ -259,6 +261,7 @@ class StudentAdmission(models.Model):
 
         if self.discount_type == "fixed" and self.discount_amount:
             discount_line_vals = {
+                "product_id": self.service_product_id.id,
                 "name": _("Discount"),
                 "quantity": 1.0,
                 "price_unit": -abs(self.discount_amount),
