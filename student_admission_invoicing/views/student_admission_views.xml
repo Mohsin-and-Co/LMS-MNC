@@ -32,7 +32,7 @@
                                 string="Create Quote"
                                 type="object"
                                 class="btn-primary"
-                                invisible="not service_product_id"/>
+                                invisible="sale_order_id"/>
                         <button name="action_view_quote"
                                 string="View Quote"
                                 type="object"
