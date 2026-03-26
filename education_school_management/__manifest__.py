@@ -29,7 +29,6 @@ Features:
     'depends': [
         'base',
         'mail',
-        'sms',
         'website',
         'sale',
         'hr',
