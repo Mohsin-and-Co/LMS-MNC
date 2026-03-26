@@ -46,7 +46,7 @@ class StudentAdmission(models.Model):
         "product.product",
         string="Fee Service Product",
         required=True,
-        domain=[("detailed_type", "=", "service")],
+        domain=[("type", "=", "service")],
         help="Select fee product from Inventory/Products. Only service products are allowed.",
         tracking=True,
     )
