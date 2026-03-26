@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_student_admission_list" model="ir.ui.view">
+            <field name="name">student.admission.list</field>
+            <field name="model">student.admission</field>
+            <field name="arch" type="xml">
+                <list string="Student Admissions"
+                      decoration-info="state == 'draft'"
+                      decoration-success="state == 'approved'">
+                    <field name="name"/>
+                    <field name="student_name"/>
+                    <field name="parent_name"/>
+                    <field name="service_product_id"/>
+                    <field name="fee_amount"/>
+                    <field name="discount_amount"/>
+                    <field name="total_amount"/>
+                    <field name="invoice_id"/>
+                    <field name="invoice_state" widget="badge"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_student_admission_form" model="ir.ui.view">
+            <field name="name">student.admission.form</field>
+            <field name="model">student.admission</field>
+            <field name="arch" type="xml">
+                <form string="Student Admission">
+                    <header>
+                        <button name="action_create_quote"
+                                string="Create/Open Quote"
+                                type="object"
+                                class="oe_highlight"/>
+                        <button name="action_view_quote"
+                                string="View Quote"
+                                type="object"
+                                class="btn-secondary"
+                                invisible="not sale_order_id"/>
+                        <button name="action_approve_invoice"
+                                string="Approve Invoice"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="not invoice_id or state == 'approved'"/>
+                        <button name="action_view_invoice"
+                                string="View Invoice"
+                                type="object"
+                                class="btn-secondary"
+                                invisible="not invoice_id"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,admitted,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Student Information">
+                                <field name="student_name"/>
+                                <field name="date_of_birth"/>
+                                <field name="gender"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="address"/>
+                            </group>
+                            <group string="Parent/Guardian Information">
+                                <field name="parent_name"/>
+                                <field name="parent_phone"/>
+                                <field name="parent_email"/>
+                                <field name="partner_id"/>
+                                <field name="student_id" readonly="1"/>
+                                <field name="admission_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Fee &amp; Invoice">
+                            <group>
+                                <field name="service_product_id"/>
+                                <field name="currency_id"/>
+                                <field name="fee_amount" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="discount_type"/>
+                                <field name="discount_value" invisible="discount_type == 'none'"/>
+                                <field name="discount_amount" readonly="1"/>
+                                <field name="total_amount" readonly="1"/>
+                                <field name="sale_order_id" readonly="1"/>
+                                <field name="sale_order_state" readonly="1"/>
+                                <field name="invoice_id" readonly="1"/>
+                                <field name="invoice_state" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_student_admission" model="ir.actions.act_window">
+            <field name="name">Admissions</field>
+            <field name="res_model">student.admission</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_student_admission_root"
+                  name="Student Admissions"
+                  parent="education_school_management.menu_school_management_root"
+                  sequence="22"/>
+        <menuitem id="menu_student_admission"
+                  name="Admissions"
+                  parent="menu_student_admission_root"
+                  action="action_student_admission"
+                  sequence="10"/>
+    </data>
+</odoo>
